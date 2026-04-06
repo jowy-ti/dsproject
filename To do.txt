@@ -1,0 +1,3 @@
+Change json decoding to gob decoding. Just change the library the methods are the same
+
+Use wazero
