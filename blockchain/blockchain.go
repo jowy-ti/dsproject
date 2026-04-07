@@ -1,30 +1,51 @@
 package blockchain
 
-import (
-	bolt "go.etcd.io/bbolt"
-)
+import "log"
 
 type Blockchain struct {
-	tip []byte   // The hash of the last block in the chain
-	db  *bolt.DB // The connection to your database (BoltDB)
+	tip    []byte       // The hash of the last block in the chain
+	boltDB *boltStorage // The connection to your database (BoltDB)
 }
 
 type BlockchainIterator struct {
 	currentHash []byte
-	db          *bolt.DB
+	boltDB      *boltStorage
 }
 
 func newBlockchain() *Blockchain {
-	firstBlock := newGenesisBlock()
+	boltDB := newBoltStorage()
+
+	tip, err := boltDB.dbGetLastHash()
+
+	if err != nil {
+		log.Fatalf("Initialising blockchain. %v. ", err)
+	}
+
+	if tip == nil {
+		GenesisBlock := newGenesisBlock()
+		err = boltDB.dbAddBlock(GenesisBlock.Hash, GenesisBlock.serialize())
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		tip = GenesisBlock.Hash
+	}
 
 	blockchain := &Blockchain{
-		tip: firstBlock.Hash,
-		db:  dbConnection(),
+		tip:    tip,
+		boltDB: boltDB,
 	}
 
 	return blockchain
 }
 
-func (bc *Blockchain) addBlock() {
+func (bc *Blockchain) addBlock(block *Block) {
+	err := bc.boltDB.dbAddBlock(block.Hash, block.serialize())
 
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	bc.tip = block.Hash
 }
