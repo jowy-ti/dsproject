@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/json"
+	"log"
 	"strconv"
 	"time"
 )
@@ -44,8 +45,7 @@ func (b *Block) serialize() []byte {
 	encoder := json.NewEncoder(&result)
 	err := encoder.Encode(b)
 	if err != nil {
-		// In a real project, handle this error properly
-		panic(err)
+		log.Fatalf("%v", err)
 	}
 
 	return result.Bytes()
@@ -59,7 +59,7 @@ func deserializeBlock(serializedBlock []byte) *Block {
 	decoder := json.NewDecoder(source)
 	err := decoder.Decode(&block)
 	if err != nil {
-		panic(err)
+		log.Fatalf("%v", err)
 	}
 
 	return &block

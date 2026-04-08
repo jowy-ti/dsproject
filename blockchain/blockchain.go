@@ -1,12 +1,13 @@
 package blockchain
 
-import "log"
+import "bytes"
 
 type Blockchain struct {
 	tip    []byte       // The hash of the last block in the chain
 	boltDB *boltStorage // The connection to your database (BoltDB)
 }
 
+// Iterator
 type BlockchainIterator struct {
 	currentHash []byte
 	boltDB      *boltStorage
@@ -14,21 +15,11 @@ type BlockchainIterator struct {
 
 func newBlockchain() *Blockchain {
 	boltDB := newBoltStorage()
-
-	tip, err := boltDB.dbGetLastHash()
-
-	if err != nil {
-		log.Fatalf("Initialising blockchain. %v. ", err)
-	}
+	tip := boltDB.dbGetLastHash()
 
 	if tip == nil {
 		GenesisBlock := newGenesisBlock()
-		err = boltDB.dbAddBlock(GenesisBlock.Hash, GenesisBlock.serialize())
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
+		boltDB.dbAddBlock(GenesisBlock.Hash, GenesisBlock.serialize())
 		tip = GenesisBlock.Hash
 	}
 
@@ -41,11 +32,56 @@ func newBlockchain() *Blockchain {
 }
 
 func (bc *Blockchain) addBlock(block *Block) {
-	err := bc.boltDB.dbAddBlock(block.Hash, block.serialize())
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	bc.boltDB.dbAddBlock(block.Hash, block.serialize())
 	bc.tip = block.Hash
 }
+
+func (bc *Blockchain) searchBlock(hash []byte) *Block {
+	var block *Block
+
+	bc.forEachBlock(func(b *Block) bool {
+		if bytes.Equal(b.Hash, hash) {
+			block = b
+			return true
+		}
+		return false
+	})
+
+	return block
+}
+
+func (bc *Blockchain) forEachBlock(fn func(*Block) bool) {
+	it := bc.newIterator()
+
+	for it.validHash() {
+		block := it.getCurrentBlock()
+		if fn(block) {
+			break
+		}
+		it.nextBlock(block)
+	}
+}
+
+func (bc *Blockchain) newIterator() *BlockchainIterator {
+	return &BlockchainIterator{
+		currentHash: bc.tip,
+		boltDB:      bc.boltDB,
+	}
+}
+
+func (it *BlockchainIterator) getCurrentBlock() *Block {
+	encodedBlock := it.boltDB.dbGetEncodedBlock(it.currentHash)
+	return deserializeBlock(encodedBlock)
+}
+
+func (it *BlockchainIterator) nextBlock(block *Block) {
+	it.currentHash = block.PrevBlockHash
+}
+
+func (it *BlockchainIterator) validHash() bool {
+	return len(it.currentHash) != 0
+}
+
+// func (it *BlockchainIterator) Reset() {
+// 	it.currentHash = it.boltDB.dbGetLastHash()
+// }
