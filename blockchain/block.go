@@ -28,17 +28,18 @@ func newBlock(data string, prevBlockHash []byte) *Block {
 		PrevBlockHash: prevBlockHash,
 		Hash:          []byte{},
 	}
-	block.setHash()
+
+	block.Hash = block.computeHash()
 	return block
 }
 
 // setHash computes and assigns the SHA-256 hash of the block
-func (b *Block) setHash() {
+func (b *Block) computeHash() []byte {
 	timestamp := []byte(strconv.FormatInt(b.Timestamp, 10)) // converted to string to produce the same results with different CPU architectures
 	headers := bytes.Join([][]byte{b.PrevBlockHash, b.Data, timestamp}, []byte{})
 	hash := sha256.Sum256(headers)
 
-	b.Hash = hash[:]
+	return hash[:]
 }
 
 // serialize encodes the Block into a byte slice using JSON

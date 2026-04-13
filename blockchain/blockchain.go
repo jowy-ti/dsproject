@@ -14,7 +14,7 @@ type BlockchainIterator struct {
 }
 
 // newBlockchain initializes the blockchain and creates the genesis block if needed
-func newBlockchain(dbPath string) *Blockchain {
+func NewBlockchain(dbPath string) *Blockchain {
 	boltDB := newBoltStorage(dbPath)
 	tip := boltDB.dbGetLastHash()
 
@@ -33,13 +33,13 @@ func newBlockchain(dbPath string) *Blockchain {
 }
 
 // addBlock stores a new block and updates the chain tip
-func (bc *Blockchain) addBlock(block *Block) {
+func (bc *Blockchain) AddBlock(block *Block) {
 	bc.boltDB.dbAddBlock(block.Hash, block.serialize())
 	bc.tip = block.Hash
 }
 
 // searchBlock looks for a block by its hash
-func (bc *Blockchain) searchBlock(hash []byte) *Block {
+func (bc *Blockchain) SearchBlock(hash []byte) *Block {
 	var block *Block
 
 	bc.forEachBlock(func(b *Block) bool {
@@ -51,6 +51,25 @@ func (bc *Blockchain) searchBlock(hash []byte) *Block {
 	})
 
 	return block
+}
+
+// validateChain validates the correctness of hashes in the chain
+func (bc *Blockchain) ValidateChain() bool {
+	var validChain bool = false
+
+	bc.forEachBlock(func(b *Block) bool {
+		if !bytes.Equal(b.Hash, b.computeHash()) {
+			return true
+		}
+
+		if len(b.PrevBlockHash) == 0 {
+			validChain = true
+		}
+
+		return false
+	})
+
+	return validChain
 }
 
 // forEachBlock iterates over all blocks and applies the given function

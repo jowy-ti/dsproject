@@ -14,7 +14,7 @@ func TestBlockchainGenesis(t *testing.T) {
 		t.Fatal("expected genesis block, got nil tip")
 	}
 
-	block := bc.searchBlock(bc.tip)
+	block := bc.SearchBlock(bc.tip)
 
 	if block == nil {
 		t.Fatal("genesis block not found")
@@ -29,7 +29,7 @@ func TestAddBlock(t *testing.T) {
 	prevTip := bc.tip
 
 	newBlock := newBlock("test block", prevTip)
-	bc.addBlock(newBlock)
+	bc.AddBlock(newBlock)
 
 	if string(bc.tip) != string(newBlock.Hash) {
 		t.Fatal("tip was not updated")
@@ -42,10 +42,10 @@ func TestForEachBlock(t *testing.T) {
 	defer cleanup()
 
 	block1 := newBlock("block1", bc.tip)
-	bc.addBlock(block1)
+	bc.AddBlock(block1)
 
 	block2 := newBlock("block2", bc.tip)
-	bc.addBlock(block2)
+	bc.AddBlock(block2)
 
 	count := 0
 
@@ -65,7 +65,7 @@ func TestForEachBlockBreak(t *testing.T) {
 	defer cleanup()
 
 	block1 := newBlock("block1", bc.tip)
-	bc.addBlock(block1)
+	bc.AddBlock(block1)
 
 	count := 0
 
@@ -86,10 +86,10 @@ func TestIteratorTraversal(t *testing.T) {
 
 	// añadir bloques
 	block1 := newBlock("block1", bc.tip)
-	bc.addBlock(block1)
+	bc.AddBlock(block1)
 
 	block2 := newBlock("block2", bc.tip)
-	bc.addBlock(block2)
+	bc.AddBlock(block2)
 
 	it := bc.newIterator()
 
@@ -112,9 +112,9 @@ func TestSearchBlockFound(t *testing.T) {
 	defer cleanup()
 
 	block := newBlock("block1", bc.tip)
-	bc.addBlock(block)
+	bc.AddBlock(block)
 
-	found := bc.searchBlock(block.Hash)
+	found := bc.SearchBlock(block.Hash)
 
 	if found == nil {
 		t.Fatal("block not found")
@@ -132,16 +132,34 @@ func TestSearchBlockNotFound(t *testing.T) {
 
 	hash := []byte("nonexistent")
 
-	found := bc.searchBlock(hash)
+	found := bc.SearchBlock(hash)
 
 	if found != nil {
 		t.Fatal("expected nil, got block")
 	}
 }
 
+func TestValidateChain(t *testing.T) {
+	bc, cleanup := newTestBlockchain()
+	defer cleanup()
+
+	block := newBlock("block1", bc.tip)
+	bc.AddBlock(block)
+
+	block = newBlock("block2", bc.tip)
+	bc.AddBlock(block)
+
+	block = newBlock("block3", bc.tip)
+	bc.AddBlock(block)
+
+	if !bc.ValidateChain() {
+		t.Fatal("inconsistent hash found in the chain")
+	}
+}
+
 // newTestBlockchain creates a temporary blockchain instance for testing
 func newTestBlockchain() (*Blockchain, func()) {
-	bc := newBlockchain(testDBPath)
+	bc := NewBlockchain(testDBPath)
 
 	cleanup := func() {
 		bc.boltDB.db.Close()

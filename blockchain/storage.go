@@ -30,6 +30,7 @@ func newBoltStorage(dbpath string) *boltStorage {
 		})
 		if err != nil {
 			log.Fatalf("Failed to create the bucket: %v", err)
+			boltDB.db.Close()
 		}
 	}
 
@@ -43,6 +44,7 @@ func (boltDB *boltStorage) dbGetLastHash() []byte {
 
 	if !boltDB.dbExistsBucket() {
 		log.Fatalf("storage.go/dbGetLastHash. Can not get the last hash because does not exist the bucket with name '%s'", bucketName)
+		boltDB.db.Close()
 	}
 
 	err := boltDB.db.View(func(tx *bolt.Tx) error {
@@ -53,6 +55,7 @@ func (boltDB *boltStorage) dbGetLastHash() []byte {
 
 	if err != nil {
 		log.Fatalf("storage.go/dbGetLastHash. %v", err)
+		boltDB.db.Close()
 	}
 
 	return lastHash
@@ -75,6 +78,7 @@ func (boltDB *boltStorage) dbAddBlock(hash []byte, encodedBlock []byte) {
 
 	if err != nil {
 		log.Fatalf("storage.go/dbAddBlock. %v", err)
+		boltDB.db.Close()
 	}
 }
 
@@ -90,6 +94,7 @@ func (boltDB *boltStorage) dbGetEncodedBlock(hash []byte) []byte {
 
 	if err != nil {
 		log.Fatalf("storage.go/dbGetEncodedBlock. %v", err)
+		boltDB.db.Close()
 	}
 
 	return encodedBlock
@@ -116,6 +121,7 @@ func dbConnection(dbpath string) *bolt.DB {
 
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
+		db.Close()
 	}
 
 	return db
