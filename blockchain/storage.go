@@ -7,7 +7,6 @@ import (
 )
 
 const (
-	dbPath      string = "blockchain.db"
 	bucketName  string = "main"
 	lastHashKey string = "l"
 )
@@ -16,11 +15,12 @@ type boltStorage struct {
 	db *bolt.DB
 }
 
-func newBoltStorage() *boltStorage {
+// newBoltStorage initializes the storage and ensures the bucket exists
+func newBoltStorage(dbpath string) *boltStorage {
 	var err error
 
 	boltDB := &boltStorage{
-		db: dbConnection(),
+		db: dbConnection(dbpath),
 	}
 
 	if !boltDB.dbExistsBucket() {
@@ -37,7 +37,7 @@ func newBoltStorage() *boltStorage {
 
 }
 
-// if hash is nil there is no blocks in the bucket
+// dbGetLastHash returns the hash of the last block; nil if empty
 func (boltDB *boltStorage) dbGetLastHash() []byte {
 	var lastHash []byte
 
@@ -58,6 +58,7 @@ func (boltDB *boltStorage) dbGetLastHash() []byte {
 	return lastHash
 }
 
+// dbAddBlock stores a block and updates the last hash pointer
 func (boltDB *boltStorage) dbAddBlock(hash []byte, encodedBlock []byte) {
 	err := boltDB.db.Update(func(tx *bolt.Tx) error {
 		var err error
@@ -77,6 +78,7 @@ func (boltDB *boltStorage) dbAddBlock(hash []byte, encodedBlock []byte) {
 	}
 }
 
+// dbGetEncodedBlock retrieves a block by its hash
 func (boltDB *boltStorage) dbGetEncodedBlock(hash []byte) []byte {
 	var encodedBlock []byte
 
@@ -95,6 +97,7 @@ func (boltDB *boltStorage) dbGetEncodedBlock(hash []byte) []byte {
 
 // Private
 
+// dbExistsBucket checks if the bucket exists
 func (boltDB *boltStorage) dbExistsBucket() bool {
 	var exists bool
 
@@ -107,8 +110,9 @@ func (boltDB *boltStorage) dbExistsBucket() bool {
 	return exists
 }
 
-func dbConnection() *bolt.DB {
-	db, err := bolt.Open(dbPath, 0600, nil)
+// dbConnection opens the database connection
+func dbConnection(dbpath string) *bolt.DB {
+	db, err := bolt.Open(dbpath, 0600, nil)
 
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)

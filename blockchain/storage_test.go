@@ -1,140 +1,87 @@
 package blockchain
 
 import (
+	"bytes"
 	"os"
 	"testing"
-
-	bolt "go.etcd.io/bbolt"
 )
 
-func TestNewBoltStorageCreatesBucket(t *testing.T) {
-	db, cleanup := newTestDB(t)
-	defer cleanup()
+const (
+	testDBPath string = "test_blockchain.db"
+)
 
-	storage := &boltStorage{db: db}
+// TestNewBoltStorage ensures the bucket is created correctly upon initialization
+func TestNewBoltStorage(t *testing.T) {
+	defer os.Remove(testDBPath)
 
-	if storage.dbExistsBucket() {
-		t.Fatal("bucket should not exist yet")
-	}
-
-	// simulate newBoltStorage behavior
-	err := db.Update(func(tx *bolt.Tx) error {
-		_, err := tx.CreateBucket([]byte(bucketName))
-		return err
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
+	storage := newBoltStorage(testDBPath)
+	defer storage.db.Close()
 
 	if !storage.dbExistsBucket() {
-		t.Fatal("bucket should exist")
+		t.Errorf("Expected bucket '%s' to exist after initialization", bucketName)
 	}
 }
 
-func TestAddBlockAndGetLastHash(t *testing.T) {
-	db, cleanup := newTestDB(t)
+// TestAddAndGetBlock verifies that a block can be stored and retrieved by its hash
+func TestAddAndGetBlock(t *testing.T) {
+	storage, cleanup := newTestDB()
 	defer cleanup()
 
-	storage := &boltStorage{db: db}
+	mockHash := []byte("block-hash-001")
+	mockData := []byte("serialized-block-data")
 
-	// create bucket
-	db.Update(func(tx *bolt.Tx) error {
-		_, _ = tx.CreateBucket([]byte(bucketName))
-		return nil
-	})
+	storage.dbAddBlock(mockHash, mockData)
 
-	hash := []byte("hash1")
-	data := []byte("block1")
+	// Test retrieval
+	retrieved := storage.dbGetEncodedBlock(mockHash)
+	if !bytes.Equal(retrieved, mockData) {
+		t.Errorf("Expected %x, got %x", mockData, retrieved)
+	}
 
-	storage.dbAddBlock(hash, data)
-
+	// Test last hash update
 	lastHash := storage.dbGetLastHash()
-
-	if string(lastHash) != string(hash) {
-		t.Fatalf("expected %s, got %s", hash, lastHash)
+	if !bytes.Equal(lastHash, mockHash) {
+		t.Errorf("Expected last hash to be %x, got %x", mockHash, lastHash)
 	}
 }
 
-func TestGetEncodedBlock(t *testing.T) {
-	db, cleanup := newTestDB(t)
+// TestLastHashUpdate verifies the 'l' key updates when a second block is added
+func TestLastHashUpdate(t *testing.T) {
+	storage, cleanup := newTestDB()
 	defer cleanup()
-
-	storage := &boltStorage{db: db}
-
-	db.Update(func(tx *bolt.Tx) error {
-		_, _ = tx.CreateBucket([]byte(bucketName))
-		return nil
-	})
-
-	hash := []byte("hash1")
-	data := []byte("block1")
-
-	storage.dbAddBlock(hash, data)
-
-	result := storage.dbGetEncodedBlock(hash)
-
-	if string(result) != string(data) {
-		t.Fatalf("expected %s, got %s", data, result)
-	}
-}
-
-func TestGetLastHashEmpty(t *testing.T) {
-	db, cleanup := newTestDB(t)
-	defer cleanup()
-
-	storage := &boltStorage{db: db}
-
-	db.Update(func(tx *bolt.Tx) error {
-		_, _ = tx.CreateBucket([]byte(bucketName))
-		return nil
-	})
-
-	lastHash := storage.dbGetLastHash()
-
-	if lastHash != nil {
-		t.Fatalf("expected nil, got %v", lastHash)
-	}
-}
-
-func TestMultipleBlocks(t *testing.T) {
-	db, cleanup := newTestDB(t)
-	defer cleanup()
-
-	storage := &boltStorage{db: db}
-
-	db.Update(func(tx *bolt.Tx) error {
-		_, _ = tx.CreateBucket([]byte(bucketName))
-		return nil
-	})
 
 	hash1 := []byte("hash1")
 	hash2 := []byte("hash2")
+	data := []byte("data")
 
-	storage.dbAddBlock(hash1, []byte("block1"))
-	storage.dbAddBlock(hash2, []byte("block2"))
+	storage.dbAddBlock(hash1, data)
+	storage.dbAddBlock(hash2, data)
 
 	lastHash := storage.dbGetLastHash()
-
-	if string(lastHash) != string(hash2) {
-		t.Fatalf("expected %s, got %s", hash2, lastHash)
+	if !bytes.Equal(lastHash, hash2) {
+		t.Errorf("Expected last hash to update to %x, but it is %x", hash2, lastHash)
 	}
 }
 
-func newTestDB(t *testing.T) (*bolt.DB, func()) {
-	file, err := os.CreateTemp("", "test-*.db")
-	if err != nil {
-		t.Fatal(err)
-	}
+// TestGetNonExistentBlock ensures the system handles missing keys gracefully
+func TestGetNonExistentBlock(t *testing.T) {
+	storage, cleanup := newTestDB()
+	defer cleanup()
 
-	db, err := bolt.Open(file.Name(), 0600, nil)
-	if err != nil {
-		t.Fatal(err)
+	result := storage.dbGetEncodedBlock([]byte("non-existent"))
+	if result != nil {
+		t.Errorf("Expected nil for non-existent block, got %v", result)
 	}
+}
+
+// newTestDB used as a helper function to initialize, close and remove db
+func newTestDB() (*boltStorage, func()) {
+	storage := newBoltStorage(testDBPath)
 
 	cleanup := func() {
-		db.Close()
-		os.Remove(file.Name())
+		storage.db.Close()
+		os.Remove(testDBPath)
 	}
 
-	return db, cleanup
+	return storage, cleanup
 }

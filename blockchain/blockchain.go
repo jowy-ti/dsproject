@@ -13,8 +13,9 @@ type BlockchainIterator struct {
 	boltDB      *boltStorage
 }
 
-func newBlockchain() *Blockchain {
-	boltDB := newBoltStorage()
+// newBlockchain initializes the blockchain and creates the genesis block if needed
+func newBlockchain(dbPath string) *Blockchain {
+	boltDB := newBoltStorage(dbPath)
 	tip := boltDB.dbGetLastHash()
 
 	if tip == nil {
@@ -31,11 +32,13 @@ func newBlockchain() *Blockchain {
 	return blockchain
 }
 
+// addBlock stores a new block and updates the chain tip
 func (bc *Blockchain) addBlock(block *Block) {
 	bc.boltDB.dbAddBlock(block.Hash, block.serialize())
 	bc.tip = block.Hash
 }
 
+// searchBlock looks for a block by its hash
 func (bc *Blockchain) searchBlock(hash []byte) *Block {
 	var block *Block
 
@@ -50,6 +53,7 @@ func (bc *Blockchain) searchBlock(hash []byte) *Block {
 	return block
 }
 
+// forEachBlock iterates over all blocks and applies the given function
 func (bc *Blockchain) forEachBlock(fn func(*Block) bool) {
 	it := bc.newIterator()
 
@@ -62,6 +66,7 @@ func (bc *Blockchain) forEachBlock(fn func(*Block) bool) {
 	}
 }
 
+// newIterator creates an iterator starting from the tip
 func (bc *Blockchain) newIterator() *BlockchainIterator {
 	return &BlockchainIterator{
 		currentHash: bc.tip,
@@ -69,15 +74,18 @@ func (bc *Blockchain) newIterator() *BlockchainIterator {
 	}
 }
 
+// getCurrentBlock returns the block at the current iterator position
 func (it *BlockchainIterator) getCurrentBlock() *Block {
 	encodedBlock := it.boltDB.dbGetEncodedBlock(it.currentHash)
 	return deserializeBlock(encodedBlock)
 }
 
+// nextBlock moves the iterator to the previous block
 func (it *BlockchainIterator) nextBlock(block *Block) {
 	it.currentHash = block.PrevBlockHash
 }
 
+// validHash checks if the iterator has a valid current position
 func (it *BlockchainIterator) validHash() bool {
 	return len(it.currentHash) != 0
 }

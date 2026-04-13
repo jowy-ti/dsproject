@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// TestNewBlock verifies that a new block is correctly initialized
 func TestNewBlock(t *testing.T) {
 	data := "Test Block Data"
 	prevHash := []byte("prev_hash_example")
@@ -26,6 +27,7 @@ func TestNewBlock(t *testing.T) {
 	}
 }
 
+// TestSerialization checks that a block can be serialized and deserialized without data loss
 func TestSerialization(t *testing.T) {
 	block := newBlock("Serialize Me", []byte{1, 2, 3})
 
@@ -53,6 +55,7 @@ func TestSerialization(t *testing.T) {
 	// fmt.Printf("\n--- Block JSON View ---\n%s\n", prettyJSON.String())
 }
 
+// TestGenesis verifies that the genesis block is correctly created
 func TestGenesis(t *testing.T) {
 	genesis := newGenesisBlock()
 
