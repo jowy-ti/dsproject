@@ -2,19 +2,16 @@ package blockchain
 
 import (
 	"bytes"
+	global "dsproject/internal"
 	"os"
 	"testing"
 )
 
-const (
-	testDBPath string = "test_blockchain.db"
-)
-
 // TestNewBoltStorage ensures the bucket is created correctly upon initialization
 func TestNewBoltStorage(t *testing.T) {
-	defer os.Remove(testDBPath)
+	defer os.Remove(global.TestDBPath)
 
-	storage := newBoltStorage(testDBPath)
+	storage := newBoltStorage(global.TestDBPath)
 	defer storage.db.Close()
 
 	if !storage.dbExistsBucket() {
@@ -76,11 +73,11 @@ func TestGetNonExistentBlock(t *testing.T) {
 
 // newTestDB used as a helper function to initialize, close and remove db
 func newTestDB() (*boltStorage, func()) {
-	storage := newBoltStorage(testDBPath)
+	storage := newBoltStorage(global.TestDBPath)
 
 	cleanup := func() {
 		storage.db.Close()
-		os.Remove(testDBPath)
+		os.Remove(global.TestDBPath)
 	}
 
 	return storage, cleanup

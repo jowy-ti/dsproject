@@ -1,6 +1,7 @@
 package blockchain
 
 import (
+	global "dsproject/internal"
 	"os"
 	"testing"
 )
@@ -159,11 +160,11 @@ func TestValidateChain(t *testing.T) {
 
 // newTestBlockchain creates a temporary blockchain instance for testing
 func newTestBlockchain() (*Blockchain, func()) {
-	bc := NewBlockchain(testDBPath)
+	bc := NewBlockchain(global.TestDBPath)
 
 	cleanup := func() {
 		bc.boltDB.db.Close()
-		os.Remove(testDBPath)
+		os.Remove(global.TestDBPath)
 	}
 
 	return bc, cleanup

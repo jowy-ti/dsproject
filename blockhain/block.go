@@ -3,6 +3,7 @@ package blockchain
 import (
 	"bytes"
 	"crypto/sha256"
+	global "dsproject/internal"
 	"encoding/json"
 	"log"
 	"strconv"
@@ -14,11 +15,8 @@ type Block struct {
 	Data          []byte // This will eventually hold transactions
 	PrevBlockHash []byte
 	Hash          []byte
+	Nonce         int
 }
-
-const (
-	genesisBlockName string = "Genesis Block"
-)
 
 // newBlock creates a new Block using the provided data and the previous block hash
 func newBlock(data string, prevBlockHash []byte) *Block {
@@ -71,5 +69,5 @@ func deserializeBlock(serializedBlock []byte) *Block {
 
 // newGenesisBlock creates the first block in the chain
 func newGenesisBlock() *Block {
-	return newBlock(genesisBlockName, []byte{})
+	return newBlock(global.GenesisBlockName, []byte{})
 }
