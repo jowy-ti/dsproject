@@ -2,42 +2,31 @@ package blockchain
 
 import (
 	"bytes"
-	"crypto/sha256"
 	global "dsproject/internal"
 	"encoding/json"
 	"log"
-	"strconv"
 	"time"
 )
 
 type Block struct {
-	Timestamp     int64
-	Data          []byte // This will eventually hold transactions
-	PrevBlockHash []byte
-	Hash          []byte
-	Nonce         int
+	timestamp     int64
+	data          []byte // This will eventually hold transactions
+	prevBlockHash []byte
+	hash          []byte
+	nonce         uint
+	difficulty    uint
 }
 
 // newBlock creates a new Block using the provided data and the previous block hash
 func newBlock(data string, prevBlockHash []byte) *Block {
 	block := &Block{
-		Timestamp:     time.Now().Unix(),
-		Data:          []byte(data),
-		PrevBlockHash: prevBlockHash,
-		Hash:          []byte{},
+		timestamp:     time.Now().Unix(),
+		data:          []byte(data),
+		prevBlockHash: prevBlockHash,
+		hash:          []byte{},
 	}
 
-	block.Hash = block.computeHash()
 	return block
-}
-
-// setHash computes and assigns the SHA-256 hash of the block
-func (b *Block) computeHash() []byte {
-	timestamp := []byte(strconv.FormatInt(b.Timestamp, 10)) // converted to string to produce the same results with different CPU architectures
-	headers := bytes.Join([][]byte{b.PrevBlockHash, b.Data, timestamp}, []byte{})
-	hash := sha256.Sum256(headers)
-
-	return hash[:]
 }
 
 // serialize encodes the Block into a byte slice using JSON
