@@ -3,5 +3,5 @@ package internal
 const (
 	TestDBPath       string = "test_blockchain.db"
 	GenesisBlockName string = "Genesis Block"
-	Difficulty       uint   = 2
+	Difficulty       uint64 = 2
 )

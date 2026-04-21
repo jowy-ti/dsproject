@@ -5,24 +5,19 @@ import (
 	"crypto/sha256"
 	global "dsproject/internal"
 	"encoding/binary"
-	"log"
 	"math"
 	"math/big"
-	"strconv"
 )
 
 type ProofOfWork struct {
 	block      *Block
 	target     *big.Int
-	difficulty uint
+	difficulty uint64
 }
 
 // NewProofOfWork sets up a PoW for a specific block
-func NewProofOfWork(b *Block) *ProofOfWork {
+func newProofOfWork(b *Block) *ProofOfWork {
 	target := big.NewInt(1)
-
-	// We shift 1 left by (256 - Difficulty) bits.
-	// The higher the difficulty, the smaller the target number.
 	target.Lsh(target, uint(256-global.Difficulty))
 
 	return &ProofOfWork{
@@ -32,16 +27,15 @@ func NewProofOfWork(b *Block) *ProofOfWork {
 	}
 }
 
-func (pow *ProofOfWork) mine() (int, []byte) {
+func (pow *ProofOfWork) mine() (uint64, []byte) {
 	var hashInt big.Int
 	var hash [32]byte
-	nonce := 0
+	var nonce uint64 = 0
 
-	for nonce < math.MaxInt64 {
-		hash = computeHash(nonce, global.Difficulty)
+	for nonce < math.MaxUint64 {
+		hash = pow.computeHash(nonce)
 		hashInt.SetBytes(hash[:])
 
-		// Check if hashInt is less than the target
 		if hashInt.Cmp(pow.target) == -1 {
 			break
 		} else {
@@ -52,36 +46,38 @@ func (pow *ProofOfWork) mine() (int, []byte) {
 }
 
 // setHash computes and assigns the SHA-256 hash of the block
-func (pow *ProofOfWork) computeHash(nonce uint, difficulty uint) []byte {
-	timestamp := []byte(strconv.FormatInt(pow.block.timestamp, 10)) // converted to string to produce the same results with different CPU architectures
-	nonceB := []byte(strconv.FormatInt(int64(nonce), 10))
-	difficultyB := []byte(strconv.FormatInt(int64(difficulty), 10))
-	headers := bytes.Join([][]byte{pow.block.prevBlockHash, pow.block.data, timestamp, nonceB, difficultyB}, []byte{})
-	hash := sha256.Sum256(headers)
-
-	return hash[:]
+func (pow *ProofOfWork) computeHash(nonce uint64) [32]byte {
+	headers := pow.prepareData(nonce)
+	return sha256.Sum256(headers)
 }
 
-// Helper function to convert int64 to hex bytes
-func intToHex(num int64) []byte {
-	buff := new(bytes.Buffer)
-	err := binary.Write(buff, binary.BigEndian, num)
-	if err != nil {
-		log.Panic(err)
-	}
-	return buff.Bytes()
-}
-
-func (pow *ProofOfWork) prepareData(nonce int) []byte {
+func (pow *ProofOfWork) prepareData(nonce uint64) []byte {
 	data := bytes.Join(
 		[][]byte{
-			pow.block.PrevBlockHash,
-			pow.block.Data,
-			IntToHex(pow.block.Timestamp),
-			IntToHex(int64(config.Difficulty)),
-			IntToHex(int64(nonce)),
+			pow.block.prevBlockHash,
+			pow.block.data,
+			IntToHex(uint64(pow.block.timestamp)),
+			IntToHex(pow.difficulty),
+			IntToHex(nonce),
 		},
 		[]byte{},
 	)
 	return data
 }
+
+// Helper function to convert int64 to hex bytes
+func IntToHex(num uint64) []byte {
+	buff := make([]byte, 8)
+	binary.BigEndian.PutUint64(buff, num)
+	return buff
+}
+
+// Old compute hash
+// func (pow *ProofOfWork) computeHash(nonce uint64, difficulty uint64) [32]byte {
+// 	timestamp := []byte(strconv.FormatInt(pow.block.timestamp, 10)) // converted to string to produce the same results with different CPU architectures
+// 	nonceB := []byte(strconv.FormatUint(nonce, 10))
+// 	difficultyB := []byte(strconv.FormatUint(difficulty, 10))
+// 	headers := bytes.Join([][]byte{pow.block.prevBlockHash, pow.block.data, timestamp, nonceB, difficultyB}, []byte{})
+
+// 	return sha256.Sum256(headers)
+// }

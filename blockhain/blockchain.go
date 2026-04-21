@@ -1,6 +1,9 @@
 package blockchain
 
-import "bytes"
+import (
+	"bytes"
+	global "dsproject/internal"
+)
 
 type Blockchain struct {
 	tip    []byte       // The hash of the last block in the chain
@@ -20,8 +23,8 @@ func NewBlockchain(dbPath string) *Blockchain {
 
 	if tip == nil {
 		GenesisBlock := newGenesisBlock()
-		boltDB.dbAddBlock(GenesisBlock.Hash, GenesisBlock.serialize())
-		tip = GenesisBlock.Hash
+		boltDB.dbAddBlock(GenesisBlock.hash, GenesisBlock.serialize())
+		tip = GenesisBlock.hash
 	}
 
 	blockchain := &Blockchain{
@@ -33,9 +36,17 @@ func NewBlockchain(dbPath string) *Blockchain {
 }
 
 // addBlock stores a new block and updates the chain tip
-func (bc *Blockchain) AddBlock(block *Block) {
-	bc.boltDB.dbAddBlock(block.Hash, block.serialize())
-	bc.tip = block.Hash
+func (bc *Blockchain) AddBlock(data string) {
+	prevBlockHash := bc.boltDB.dbGetLastHash()
+	block := newBlock(data, prevBlockHash, global.Difficulty)
+
+	pow := newProofOfWork(block)
+	hash, nonce := pow.mine()
+	block.setInfoAfterMining(hash, nonce)
+
+	bc.boltDB.dbAddBlock(block.hash, block.serialize())
+
+	bc.tip = block.hash
 }
 
 // searchBlock looks for a block by its hash
@@ -43,7 +54,7 @@ func (bc *Blockchain) SearchBlock(hash []byte) *Block {
 	var block *Block
 
 	bc.forEachBlock(func(b *Block) bool {
-		if bytes.Equal(b.Hash, hash) {
+		if bytes.Equal(b.hash, hash) {
 			block = b
 			return true
 		}
@@ -58,11 +69,11 @@ func (bc *Blockchain) ValidateChain() bool {
 	var validChain bool = false
 
 	bc.forEachBlock(func(b *Block) bool {
-		if !bytes.Equal(b.Hash, b.computeHash()) {
+		if !bytes.Equal(b.hash, b.computeHash()) {
 			return true
 		}
 
-		if len(b.PrevBlockHash) == 0 {
+		if len(b.prevBlockHash) == 0 {
 			validChain = true
 		}
 
@@ -101,7 +112,7 @@ func (it *BlockchainIterator) getCurrentBlock() *Block {
 
 // nextBlock moves the iterator to the previous block
 func (it *BlockchainIterator) nextBlock(block *Block) {
-	it.currentHash = block.PrevBlockHash
+	it.currentHash = block.prevBlockHash
 }
 
 // validHash checks if the iterator has a valid current position

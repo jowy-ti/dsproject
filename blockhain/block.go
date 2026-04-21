@@ -9,24 +9,31 @@ import (
 )
 
 type Block struct {
-	timestamp     int64
-	data          []byte // This will eventually hold transactions
-	prevBlockHash []byte
 	hash          []byte
-	nonce         uint
-	difficulty    uint
+	prevBlockHash []byte
+	data          []byte
+	nonce         uint64
+	difficulty    uint64
+	timestamp     int64
 }
 
 // newBlock creates a new Block using the provided data and the previous block hash
-func newBlock(data string, prevBlockHash []byte) *Block {
+func newBlock(data string, prevBlockHash []byte, difficulty uint64) *Block {
 	block := &Block{
-		timestamp:     time.Now().Unix(),
-		data:          []byte(data),
-		prevBlockHash: prevBlockHash,
 		hash:          []byte{},
+		prevBlockHash: prevBlockHash,
+		data:          []byte(data),
+		nonce:         0,
+		difficulty:    difficulty,
+		timestamp:     time.Now().Unix(),
 	}
 
 	return block
+}
+
+func (b *Block) setInfoAfterMining(nonce uint64, hash []byte) {
+	b.hash = hash
+	b.nonce = nonce
 }
 
 // serialize encodes the Block into a byte slice using JSON
@@ -58,5 +65,5 @@ func deserializeBlock(serializedBlock []byte) *Block {
 
 // newGenesisBlock creates the first block in the chain
 func newGenesisBlock() *Block {
-	return newBlock(global.GenesisBlockName, []byte{})
+	return newBlock(global.GenesisBlockName, []byte{}, 0)
 }
