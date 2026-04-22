@@ -2,7 +2,6 @@ package blockchain
 
 import (
 	"bytes"
-	global "dsproject/internal"
 )
 
 type Blockchain struct {
@@ -38,9 +37,9 @@ func NewBlockchain(dbPath string) *Blockchain {
 // addBlock stores a new block and updates the chain tip
 func (bc *Blockchain) AddBlock(data string) {
 	prevBlockHash := bc.boltDB.dbGetLastHash()
-	block := newBlock(data, prevBlockHash, global.Difficulty)
+	pow := newProofOfWork()
+	block := newBlock(data, prevBlockHash, pow.difficulty)
 
-	pow := newProofOfWork(block)
 	hash, nonce := pow.mine()
 	block.setInfoAfterMining(hash, nonce)
 
@@ -88,11 +87,10 @@ func (bc *Blockchain) forEachBlock(fn func(*Block) bool) {
 	it := bc.newIterator()
 
 	for it.validHash() {
-		block := it.getCurrentBlock()
+		block := it.getBlockAndAdvance()
 		if fn(block) {
 			break
 		}
-		it.nextBlock(block)
 	}
 }
 
@@ -105,14 +103,11 @@ func (bc *Blockchain) newIterator() *BlockchainIterator {
 }
 
 // getCurrentBlock returns the block at the current iterator position
-func (it *BlockchainIterator) getCurrentBlock() *Block {
+func (it *BlockchainIterator) getBlockAndAdvance() *Block {
 	encodedBlock := it.boltDB.dbGetEncodedBlock(it.currentHash)
-	return deserializeBlock(encodedBlock)
-}
-
-// nextBlock moves the iterator to the previous block
-func (it *BlockchainIterator) nextBlock(block *Block) {
+	block := deserializeBlock(encodedBlock)
 	it.currentHash = block.prevBlockHash
+	return block
 }
 
 // validHash checks if the iterator has a valid current position
