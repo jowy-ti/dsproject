@@ -23,7 +23,7 @@ func newProofOfWork() *ProofOfWork {
 
 func (pow *ProofOfWork) mine(block *Block) {
 	var hashInt big.Int
-	var hash [32]byte = block.hash
+	var hash [32]byte = block.getHash()
 
 	for hashInt.Cmp(pow.target) != -1 {
 		block.nextNonce()

@@ -39,7 +39,7 @@ func newBoltStorage(dbpath string) *boltStorage {
 }
 
 // dbGetLastHash returns the hash of the last block; nil if empty
-func (boltDB *boltStorage) dbGetLastHash() []byte {
+func (boltDB *boltStorage) dbGetLastHash() [32]byte {
 	var lastHash []byte
 
 	if !boltDB.dbExistsBucket() {
@@ -58,22 +58,26 @@ func (boltDB *boltStorage) dbGetLastHash() []byte {
 		boltDB.db.Close()
 	}
 
-	return lastHash
+	if lastHash == nil {
+		return [32]byte{}
+	}
+
+	return [32]byte(lastHash)
 }
 
 // dbAddBlock stores a block and updates the last hash pointer
-func (boltDB *boltStorage) dbAddBlock(hash []byte, encodedBlock []byte) {
+func (boltDB *boltStorage) dbAddBlock(hash [32]byte, encodedBlock []byte) {
 	err := boltDB.db.Update(func(tx *bolt.Tx) error {
 		var err error
 
 		bucket := tx.Bucket([]byte(bucketName))
-		err = bucket.Put(hash, encodedBlock)
+		err = bucket.Put(hash[:], encodedBlock)
 
 		if err != nil {
 			return err
 		}
 
-		return bucket.Put([]byte(lastHashKey), hash)
+		return bucket.Put([]byte(lastHashKey), hash[:])
 	})
 
 	if err != nil {
@@ -83,12 +87,12 @@ func (boltDB *boltStorage) dbAddBlock(hash []byte, encodedBlock []byte) {
 }
 
 // dbGetEncodedBlock retrieves a block by its hash
-func (boltDB *boltStorage) dbGetEncodedBlock(hash []byte) []byte {
+func (boltDB *boltStorage) dbGetEncodedBlock(hash [32]byte) []byte {
 	var encodedBlock []byte
 
 	err := boltDB.db.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(bucketName))
-		encodedBlock = bucket.Get(hash)
+		encodedBlock = bucket.Get(hash[:])
 		return nil
 	})
 

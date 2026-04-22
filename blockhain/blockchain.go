@@ -1,17 +1,13 @@
 package blockchain
 
-import (
-	"bytes"
-)
-
 type Blockchain struct {
-	tip    []byte       // The hash of the last block in the chain
+	tip    [32]byte     // The hash of the last block in the chain
 	boltDB *boltStorage // The connection to your database (BoltDB)
 }
 
 // Iterator
 type BlockchainIterator struct {
-	currentHash []byte
+	currentHash [32]byte
 	boltDB      *boltStorage
 }
 
@@ -20,14 +16,14 @@ func NewBlockchain(dbPath string) *Blockchain {
 	boltDB := newBoltStorage(dbPath)
 	tip := boltDB.dbGetLastHash()
 
-	if tip == nil {
+	if tip == [32]byte{} {
 		GenesisBlock := newGenesisBlock()
-		boltDB.dbAddBlock(GenesisBlock.hash, GenesisBlock.serialize())
-		tip = GenesisBlock.hash
+		boltDB.dbAddBlock(GenesisBlock.Hash, GenesisBlock.serialize())
+		tip = GenesisBlock.getHash()
 	}
 
 	blockchain := &Blockchain{
-		tip:    tip,
+		tip:    [32]byte(tip),
 		boltDB: boltDB,
 	}
 
@@ -37,23 +33,26 @@ func NewBlockchain(dbPath string) *Blockchain {
 // addBlock stores a new block and updates the chain tip
 func (bc *Blockchain) AddBlock(data string) {
 	prevBlockHash := bc.boltDB.dbGetLastHash()
+
+	if prevBlockHash == [32]byte{} {
+		panic("AddBlock. There are not blocks in the chain")
+	}
+
 	pow := newProofOfWork()
-	block := newBlock(data, prevBlockHash, pow.difficulty)
+	block := newBlock(data, [32]byte(prevBlockHash), pow.difficulty)
+	pow.mine(block)
+	hash := block.getHash()
+	bc.boltDB.dbAddBlock(hash, block.serialize())
 
-	hash, nonce := pow.mine()
-	block.setInfoAfterMining(hash, nonce)
-
-	bc.boltDB.dbAddBlock(block.hash, block.serialize())
-
-	bc.tip = block.hash
+	bc.tip = block.getHash()
 }
 
 // searchBlock looks for a block by its hash
-func (bc *Blockchain) SearchBlock(hash []byte) *Block {
+func (bc *Blockchain) SearchBlock(hash [32]byte) *Block {
 	var block *Block
 
 	bc.forEachBlock(func(b *Block) bool {
-		if bytes.Equal(b.hash, hash) {
+		if b.getHash() == hash {
 			block = b
 			return true
 		}
@@ -68,11 +67,13 @@ func (bc *Blockchain) ValidateChain() bool {
 	var validChain bool = false
 
 	bc.forEachBlock(func(b *Block) bool {
-		if !bytes.Equal(b.hash, b.computeHash()) {
+		validHash := b.computeHash()
+
+		if b.getHash() != validHash {
 			return true
 		}
 
-		if len(b.prevBlockHash) == 0 {
+		if b.getPrevBlockHash() == [32]byte{} {
 			validChain = true
 		}
 
@@ -106,13 +107,13 @@ func (bc *Blockchain) newIterator() *BlockchainIterator {
 func (it *BlockchainIterator) getBlockAndAdvance() *Block {
 	encodedBlock := it.boltDB.dbGetEncodedBlock(it.currentHash)
 	block := deserializeBlock(encodedBlock)
-	it.currentHash = block.prevBlockHash
+	it.currentHash = block.getPrevBlockHash()
 	return block
 }
 
 // validHash checks if the iterator has a valid current position
 func (it *BlockchainIterator) validHash() bool {
-	return len(it.currentHash) != 0
+	return it.currentHash != [32]byte{}
 }
 
 // func (it *BlockchainIterator) Reset() {

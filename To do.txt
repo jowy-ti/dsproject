@@ -1,3 +1,5 @@
-Change json decoding to gob decoding. Just change the library the methods are the same
+P2P
 
-Use wazero
+Adjust diff PoW
+
+Merkle Tree

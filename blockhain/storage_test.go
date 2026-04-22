@@ -7,67 +7,69 @@ import (
 	"testing"
 )
 
-// TestNewBoltStorage ensures the bucket is created correctly upon initialization
 func TestNewBoltStorage(t *testing.T) {
-	defer os.Remove(global.TestDBPath)
+	storage, cleanup := newTestDB()
+	defer cleanup()
 
-	storage := newBoltStorage(global.TestDBPath)
-	defer storage.db.Close()
+	if storage == nil || storage.db == nil {
+		t.Fatal("Storage or DB connection is nil")
+	}
 
 	if !storage.dbExistsBucket() {
-		t.Errorf("Expected bucket '%s' to exist after initialization", bucketName)
+		t.Error("Bucket should have been created during initialization")
 	}
 }
 
-// TestAddAndGetBlock verifies that a block can be stored and retrieved by its hash
 func TestAddAndGetBlock(t *testing.T) {
 	storage, cleanup := newTestDB()
 	defer cleanup()
 
-	mockHash := []byte("block-hash-001")
-	mockData := []byte("serialized-block-data")
+	// 1. Create mock data using [32]byte
+	var mockHash [32]byte
+	copy(mockHash[:], "block-hash-001") // Note: copy handles slice to array
+	mockData := []byte("serialized-block-bytes")
 
+	// 2. Test AddBlock
 	storage.dbAddBlock(mockHash, mockData)
 
-	// Test retrieval
+	// 3. Test Retrieval
 	retrieved := storage.dbGetEncodedBlock(mockHash)
 	if !bytes.Equal(retrieved, mockData) {
-		t.Errorf("Expected %x, got %x", mockData, retrieved)
-	}
-
-	// Test last hash update
-	lastHash := storage.dbGetLastHash()
-	if !bytes.Equal(lastHash, mockHash) {
-		t.Errorf("Expected last hash to be %x, got %x", mockHash, lastHash)
+		t.Errorf("Expected data %s, got %s", string(mockData), string(retrieved))
 	}
 }
 
-// TestLastHashUpdate verifies the 'l' key updates when a second block is added
-func TestLastHashUpdate(t *testing.T) {
+func TestLastHashPointer(t *testing.T) {
 	storage, cleanup := newTestDB()
 	defer cleanup()
 
-	hash1 := []byte("hash1")
-	hash2 := []byte("hash2")
-	data := []byte("data")
+	// Initially, last hash should be empty (32 zeros)
+	if storage.dbGetLastHash() != ([32]byte{}) {
+		t.Error("Initial last hash should be empty")
+	}
 
-	storage.dbAddBlock(hash1, data)
-	storage.dbAddBlock(hash2, data)
+	// Add a block
+	var newHash [32]byte
+	copy(newHash[:], "latest-block-hash")
+	storage.dbAddBlock(newHash, []byte("some data"))
 
+	// Verify the 'l' key updated
 	lastHash := storage.dbGetLastHash()
-	if !bytes.Equal(lastHash, hash2) {
-		t.Errorf("Expected last hash to update to %x, but it is %x", hash2, lastHash)
+	if lastHash != newHash {
+		t.Errorf("Last hash pointer was not updated. Expected %x, got %x", newHash, lastHash)
 	}
 }
 
-// TestGetNonExistentBlock ensures the system handles missing keys gracefully
-func TestGetNonExistentBlock(t *testing.T) {
+func TestMissingBlock(t *testing.T) {
 	storage, cleanup := newTestDB()
 	defer cleanup()
 
-	result := storage.dbGetEncodedBlock([]byte("non-existent"))
-	if result != nil {
-		t.Errorf("Expected nil for non-existent block, got %v", result)
+	var fakeHash [32]byte
+	copy(fakeHash[:], "i-do-not-exist")
+
+	retrieved := storage.dbGetEncodedBlock(fakeHash)
+	if retrieved != nil {
+		t.Error("Retrieving a non-existent block should return nil")
 	}
 }
 

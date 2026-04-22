@@ -6,137 +6,81 @@ import (
 	"testing"
 )
 
-// TestBlockchainGenesis verifies that the blockchain initializes with a genesis block
-func TestBlockchainGenesis(t *testing.T) {
+func TestNewBlockchain(t *testing.T) {
 	bc, cleanup := newTestBlockchain()
 	defer cleanup()
 
-	if bc.tip == nil {
-		t.Fatal("expected genesis block, got nil tip")
+	if bc.tip == [32]byte{} {
+		t.Error("Blockchain tip should not be empty after initialization")
 	}
 
-	block := bc.SearchBlock(bc.tip)
-
-	if block == nil {
-		t.Fatal("genesis block not found")
+	// Verify genesis block exists by iterating
+	it := bc.newIterator()
+	if !it.validHash() {
+		t.Error("Iterator should be valid for a new blockchain (Genesis block)")
 	}
 }
 
-// TestAddBlock checks that adding a block updates the chain tip
 func TestAddBlock(t *testing.T) {
 	bc, cleanup := newTestBlockchain()
 	defer cleanup()
 
-	prevTip := bc.tip
+	oldTip := bc.tip
 
-	newBlock := newBlock("test block", prevTip)
-	bc.AddBlock(newBlock)
+	bc.AddBlock("Send 1 BTC to Alice")
 
-	if string(bc.tip) != string(newBlock.Hash) {
-		t.Fatal("tip was not updated")
+	if bc.tip == oldTip {
+		t.Error("Blockchain tip should have updated after AddBlock")
 	}
 }
 
-// TestForEachBlock ensures all blocks are visited during iteration
-func TestForEachBlock(t *testing.T) {
+func TestSearchBlock(t *testing.T) {
 	bc, cleanup := newTestBlockchain()
 	defer cleanup()
 
-	block1 := newBlock("block1", bc.tip)
-	bc.AddBlock(block1)
+	data := "Searchable Data"
+	bc.AddBlock(data)
 
-	block2 := newBlock("block2", bc.tip)
-	bc.AddBlock(block2)
+	targetHash := bc.tip
+
+	found := bc.SearchBlock(targetHash)
+	if found == nil {
+		t.Fatal("Should have found the block by its hash")
+	}
+
+	if string(found.Data) != data {
+		t.Errorf("Expected data %s, got %s", data, string(found.Data))
+	}
+
+	// Test searching for non-existent hash
+	var fakeHash [32]byte
+	fakeHash[0] = 0xFF
+	if bc.SearchBlock(fakeHash) != nil {
+		t.Error("Should not find a block with a fake hash")
+	}
+}
+
+func TestIterator(t *testing.T) {
+	bc, cleanup := newTestBlockchain()
+	defer cleanup()
+
+	bc.AddBlock("Block 1")
+	bc.AddBlock("Block 2")
 
 	count := 0
-
-	bc.forEachBlock(func(b *Block) bool {
-		count++
-		return false
-	})
-
-	if count != 3 {
-		t.Fatalf("expected 3 blocks, got %d", count)
-	}
-}
-
-// TestForEachBlockBreak verifies that iteration stops when the callback returns true
-func TestForEachBlockBreak(t *testing.T) {
-	bc, cleanup := newTestBlockchain()
-	defer cleanup()
-
-	block1 := newBlock("block1", bc.tip)
-	bc.AddBlock(block1)
-
-	count := 0
-
-	bc.forEachBlock(func(b *Block) bool {
-		count++
-		return true // parar inmediatamente
-	})
-
-	if count != 1 {
-		t.Fatalf("expected 1 iteration, got %d", count)
-	}
-}
-
-// TestIteratorTraversal checks that the iterator traverses all blocks including genesis
-func TestIteratorTraversal(t *testing.T) {
-	bc, cleanup := newTestBlockchain()
-	defer cleanup()
-
-	// añadir bloques
-	block1 := newBlock("block1", bc.tip)
-	bc.AddBlock(block1)
-
-	block2 := newBlock("block2", bc.tip)
-	bc.AddBlock(block2)
-
 	it := bc.newIterator()
 
-	count := 0
-
 	for it.validHash() {
-		block := it.getCurrentBlock()
+		block := it.getBlockAndAdvance()
 		count++
-		it.nextBlock(block)
+		if block == nil {
+			t.Fatal("Iterator returned nil block")
+		}
 	}
 
+	// Genesis + Block 1 + Block 2 = 3 blocks
 	if count != 3 {
-		t.Fatalf("expected 2 blocks + genesis block, got %d", count)
-	}
-}
-
-// TestSearchBlockFound verifies that an existing block can be found by hash
-func TestSearchBlockFound(t *testing.T) {
-	bc, cleanup := newTestBlockchain()
-	defer cleanup()
-
-	block := newBlock("block1", bc.tip)
-	bc.AddBlock(block)
-
-	found := bc.SearchBlock(block.Hash)
-
-	if found == nil {
-		t.Fatal("block not found")
-	}
-
-	if string(found.Hash) != string(block.Hash) {
-		t.Fatal("wrong block returned")
-	}
-}
-
-// TestSearchBlockNotFound verifies that searching for a non-existent block returns nil
-func TestSearchBlockNotFound(t *testing.T) {
-	bc, cleanup := newTestBlockchain()
-	defer cleanup()
-
-	hash := []byte("nonexistent")
-
-	found := bc.SearchBlock(hash)
-
-	if found != nil {
-		t.Fatal("expected nil, got block")
+		t.Errorf("Expected 3 blocks in chain, got %d", count)
 	}
 }
 
@@ -144,17 +88,11 @@ func TestValidateChain(t *testing.T) {
 	bc, cleanup := newTestBlockchain()
 	defer cleanup()
 
-	block := newBlock("block1", bc.tip)
-	bc.AddBlock(block)
-
-	block = newBlock("block2", bc.tip)
-	bc.AddBlock(block)
-
-	block = newBlock("block3", bc.tip)
-	bc.AddBlock(block)
+	bc.AddBlock("First valid block")
+	bc.AddBlock("Second valid block")
 
 	if !bc.ValidateChain() {
-		t.Fatal("inconsistent hash found in the chain")
+		t.Error("Chain should be valid")
 	}
 }
 

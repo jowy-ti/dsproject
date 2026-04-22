@@ -12,24 +12,24 @@ import (
 )
 
 type Block struct {
-	data          []byte
-	hash          [32]byte
-	prevBlockHash [32]byte
-	nonce         uint64
-	difficulty    uint64
-	timestamp     int64
+	Data          []byte
+	Hash          [32]byte
+	PrevBlockHash [32]byte
+	Nonce         uint64
+	Difficulty    uint64
+	Timestamp     int64
 }
 
 // newBlock creates a new Block using the provided data and the previous block hash
 func newBlock(data string, prevBlockHash [32]byte, difficulty uint64) *Block {
 	block := &Block{
-		data:          []byte(data),
-		prevBlockHash: prevBlockHash,
-		nonce:         math.MaxUint64,
-		difficulty:    difficulty,
-		timestamp:     time.Now().Unix(),
+		Data:          []byte(data),
+		PrevBlockHash: prevBlockHash,
+		Nonce:         math.MaxUint64,
+		Difficulty:    difficulty,
+		Timestamp:     time.Now().Unix(),
 	}
-	block.hash = block.computeHash()
+	block.Hash = block.computeHash()
 	return block
 }
 
@@ -39,7 +39,15 @@ func newGenesisBlock() *Block {
 }
 
 func (b *Block) setHash(hash [32]byte) {
-	b.hash = hash
+	b.Hash = hash
+}
+
+func (b *Block) getHash() [32]byte {
+	return b.Hash
+}
+
+func (b *Block) getPrevBlockHash() [32]byte {
+	return b.PrevBlockHash
 }
 
 // serialize encodes the Block into a byte slice using JSON
@@ -71,18 +79,18 @@ func deserializeBlock(serializedBlock []byte) *Block {
 
 // Iterates nonce
 func (b *Block) nextNonce() {
-	b.nonce += 1
+	b.Nonce += 1
 }
 
 // setHash computes and assigns the SHA-256 hash of the block
 func (b *Block) computeHash() [32]byte {
 	headers := bytes.Join(
 		[][]byte{
-			b.prevBlockHash[:],
-			b.data,
-			intToHex(uint64(b.timestamp)),
-			intToHex(b.difficulty),
-			intToHex(b.nonce),
+			b.PrevBlockHash[:],
+			b.Data,
+			intToHex(uint64(b.Timestamp)),
+			intToHex(b.Difficulty),
+			intToHex(b.Nonce),
 		},
 		[]byte{},
 	)

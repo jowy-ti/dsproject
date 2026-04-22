@@ -2,68 +2,85 @@ package blockchain
 
 import (
 	"bytes"
+	"reflect"
 	"testing"
 )
 
-// TestNewBlock verifies that a new block is correctly initialized
 func TestNewBlock(t *testing.T) {
 	data := "Test Block Data"
-	prevHash := []byte("prev_hash_example")
-	block := newBlock(data, prevHash)
+	prevHash := [32]byte{1, 2, 3}
+	difficulty := uint64(12)
 
-	// Verify Data was stored correctly
-	if !bytes.Equal(block.Data, []byte(data)) {
-		t.Errorf("Expected data %s, got %s", data, string(block.Data))
+	b := newBlock(data, prevHash, difficulty)
+
+	if string(b.Data) != data {
+		t.Errorf("Expected data %s, got %s", data, b.Data)
 	}
-
-	// Verify Hash was actually generated
-	if len(block.Hash) == 0 {
-		t.Error("Hash should not be empty")
+	if b.PrevBlockHash != prevHash {
+		t.Errorf("Previous hash mismatch")
 	}
-
-	// Verify the Link
-	if !bytes.Equal(block.PrevBlockHash, prevHash) {
-		t.Error("PrevBlockHash does not match the provided hash")
+	if b.Difficulty != difficulty {
+		t.Errorf("Difficulty mismatch")
+	}
+	// Verify hash was actually computed and isn't just zeros
+	if b.Hash == [32]byte{} {
+		t.Error("Block hash should not be empty")
 	}
 }
 
-// TestSerialization checks that a block can be serialized and deserialized without data loss
-func TestSerialization(t *testing.T) {
-	block := newBlock("Serialize Me", []byte{1, 2, 3})
+func TestNewGenesisBlock(t *testing.T) {
+	b := newGenesisBlock()
 
-	// Convert to bytes
-	serialized := block.serialize()
+	if b.PrevBlockHash != [32]byte{} {
+		t.Error("Genesis block should have an empty previous hash")
+	}
+	if b.Difficulty != 0 {
+		t.Error("Genesis block should have 0 difficulty by default")
+	}
+}
 
-	// Convert back to struct
+func TestComputeHash(t *testing.T) {
+	b := newBlock("Hash Test", [32]byte{}, 1)
+
+	hash1 := b.computeHash()
+	hash2 := b.computeHash()
+
+	if hash1 != hash2 {
+		t.Error("Hashes of the same data should be identical")
+	}
+
+	// Change the nonce and verify hash changes
+	b.nextNonce()
+	hash3 := b.computeHash()
+
+	if hash1 == hash3 {
+		t.Error("Hash should change when nonce changes")
+	}
+}
+
+func TestSerialize(t *testing.T) {
+	// NOTE: This test will fail unless you capitalize the Block fields!
+	b := newBlock("Serialize Test", [32]byte{0xAA}, 1)
+
+	serialized := b.serialize()
+	if len(serialized) == 0 {
+		t.Fatal("Serialized data should not be empty")
+	}
+
 	deserialized := deserializeBlock(serialized)
 
-	// Compare fields
-	if !bytes.Equal(block.Hash, deserialized.Hash) {
-		t.Error("Hashes do not match after deserialization")
+	// We use reflect.DeepEqual to compare the whole struct including slices
+	if !reflect.DeepEqual(b, deserialized) {
+		t.Errorf("Deserialized block does not match original")
 	}
-
-	if string(deserialized.Data) != "Serialize Me" {
-		t.Error("Data was corrupted during serialization")
-	}
-
-	if block.Timestamp != deserialized.Timestamp {
-		t.Error("Timestamp was lost during serialization")
-	}
-
-	// var prettyJSON bytes.Buffer
-	// json.Indent(&prettyJSON, serialized, "", "  ")
-	// fmt.Printf("\n--- Block JSON View ---\n%s\n", prettyJSON.String())
 }
 
-// TestGenesis verifies that the genesis block is correctly created
-func TestGenesis(t *testing.T) {
-	genesis := newGenesisBlock()
+func TestIntToHex(t *testing.T) {
+	val := uint64(1)
+	expected := []byte{0, 0, 0, 0, 0, 0, 0, 1}
+	res := intToHex(val)
 
-	if string(genesis.Data) != "Genesis Block" {
-		t.Error("Genesis block data is incorrect")
-	}
-
-	if len(genesis.PrevBlockHash) != 0 {
-		t.Error("Genesis block should not have a previous hash")
+	if !bytes.Equal(res, expected) {
+		t.Errorf("intToHex failed. Got %v, want %v", res, expected)
 	}
 }
