@@ -1,11 +1,11 @@
-package blockchain
+package pkg
 
 import (
 	"bytes"
 	"crypto/sha256"
-	global "dsproject/internal"
+	global "dsproject/pkg/config"
 	"encoding/binary"
-	"encoding/json"
+	"encoding/gob"
 	"log"
 	"math"
 	"time"
@@ -50,11 +50,11 @@ func (b *Block) getPrevBlockHash() [32]byte {
 	return b.PrevBlockHash
 }
 
-// serialize encodes the Block into a byte slice using JSON
+// serialize encodes the Block into a byte slice using GOB
 func (b *Block) serialize() []byte {
 	var result bytes.Buffer
 
-	encoder := json.NewEncoder(&result)
+	encoder := gob.NewEncoder(&result)
 	err := encoder.Encode(b)
 	if err != nil {
 		log.Fatalf("%v", err)
@@ -68,7 +68,7 @@ func deserializeBlock(serializedBlock []byte) *Block {
 	var block Block
 
 	source := bytes.NewReader(serializedBlock)
-	decoder := json.NewDecoder(source)
+	decoder := gob.NewDecoder(source)
 	err := decoder.Decode(&block)
 	if err != nil {
 		log.Fatalf("%v", err)

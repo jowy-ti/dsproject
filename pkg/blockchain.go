@@ -1,4 +1,4 @@
-package blockchain
+package pkg
 
 type Blockchain struct {
 	tip    [32]byte     // The hash of the last block in the chain
@@ -81,6 +81,23 @@ func (bc *Blockchain) ValidateChain() bool {
 	})
 
 	return validChain
+}
+
+// GetDataFromBlock gets the data from a Block regarding its position being the position 0 the last block
+func (bc *Blockchain) GetDataFromBlock(pos int) string {
+	var data string
+	cont := 0
+
+	bc.forEachBlock(func(b *Block) bool {
+		if cont == pos {
+			data = string(b.Data)
+			return true
+		}
+
+		cont++
+		return false
+	})
+	return data
 }
 
 // forEachBlock iterates over all blocks and applies the given function

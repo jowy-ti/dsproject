@@ -1,7 +1,7 @@
-package blockchain
+package pkg
 
 import (
-	global "dsproject/internal"
+	global "dsproject/pkg/config"
 	"os"
 	"testing"
 )

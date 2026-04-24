@@ -1,8 +1,8 @@
-package blockchain
+package pkg
 
 import (
 	"bytes"
-	global "dsproject/internal"
+	global "dsproject/pkg/config"
 	"os"
 	"testing"
 )

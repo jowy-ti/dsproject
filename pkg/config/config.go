@@ -1,4 +1,4 @@
-package internal
+package config
 
 const (
 	TestDBPath       string = "test_blockchain.db"
