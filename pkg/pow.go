@@ -24,13 +24,14 @@ func newProofOfWork() *ProofOfWork {
 func (pow *ProofOfWork) mine(block *Block) {
 	var hashInt big.Int
 	var hash [32]byte = block.getHash()
+	hashInt.SetBytes(hash[:])
 
 	for hashInt.Cmp(pow.target) != -1 {
 		block.nextNonce()
 		hash = block.computeHash()
 		hashInt.SetBytes(hash[:])
 	}
-
+	println(block.Nonce)
 	block.setHash(hash)
 }
 
