@@ -96,6 +96,24 @@ func TestValidateChain(t *testing.T) {
 	}
 }
 
+func TestGetDataFromBlock(t *testing.T) {
+	bc, cleanup := newTestBlockchain()
+	defer cleanup()
+
+	block1data := "Block 1"
+	block2data := "Block 2"
+	bc.AddBlock(block1data)
+	bc.AddBlock(block2data)
+
+	if bc.GetDataFromBlock(0) != block2data {
+		t.Error("No coincidence in the data of block2")
+	}
+
+	if bc.GetDataFromBlock(1) != block1data {
+		t.Error("No coincidence in the data of block1")
+	}
+}
+
 // newTestBlockchain creates a temporary blockchain instance for testing
 func newTestBlockchain() (*Blockchain, func()) {
 	bc := NewBlockchain(global.TestDBPath)
