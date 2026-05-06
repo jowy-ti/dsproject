@@ -20,4 +20,8 @@ func main() {
 	println(bc.GetDataFromBlock(2))
 	println(bc.GetDataFromBlock(1))
 	println(bc.GetDataFromBlock(0))
+
+	// value := "Holiiiii"
+	// by := []byte(value)
+	// print(fmt.Sprintf("string: %s, byte: % x", string(by), by))
 }
