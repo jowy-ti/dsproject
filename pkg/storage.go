@@ -7,13 +7,49 @@ import (
 )
 
 const (
-	bucketName  string = "main"
-	lastHashKey string = "l"
+	bucketNameBlocks string = "blocks"
+	bucketNameTries  string = "tries"
+	lastHashKey      string = "l"
 )
 
 type boltStorage struct {
 	db *bolt.DB
 }
+
+// Private
+
+// dbExistsBucket checks if the bucket exists
+func (boltDB *boltStorage) dbExistsBuckets() bool {
+	var exists bool
+
+	boltDB.db.View(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte(bucketNameBlocks))
+		exists = bucket != nil
+		return nil
+	})
+
+	boltDB.db.View(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte(bucketNameTries))
+		exists = bucket != nil
+		return nil
+	})
+
+	return exists
+}
+
+// dbConnection opens the database connection
+func dbConnection(dbpath string) *bolt.DB {
+	db, err := bolt.Open(dbpath, 0600, nil)
+
+	if err != nil {
+		log.Fatalf("Failed to connect to the database: %v", err)
+		db.Close()
+	}
+
+	return db
+}
+
+// Public
 
 // newBoltStorage initializes the storage and ensures the bucket exists
 func newBoltStorage(dbpath string) *boltStorage {
@@ -23,9 +59,17 @@ func newBoltStorage(dbpath string) *boltStorage {
 		db: dbConnection(dbpath),
 	}
 
-	if !boltDB.dbExistsBucket() {
+	if !boltDB.dbExistsBuckets() {
 		err = boltDB.db.Update(func(tx *bolt.Tx) error {
-			_, err = tx.CreateBucket([]byte(bucketName))
+			_, err = tx.CreateBucket([]byte(bucketNameBlocks))
+			return err
+		})
+		if err != nil {
+			log.Fatalf("Failed to create the bucket: %v", err)
+			boltDB.db.Close()
+		}
+		err = boltDB.db.Update(func(tx *bolt.Tx) error {
+			_, err = tx.CreateBucket([]byte(bucketNameTries))
 			return err
 		})
 		if err != nil {
@@ -42,13 +86,13 @@ func newBoltStorage(dbpath string) *boltStorage {
 func (boltDB *boltStorage) dbGetLastHash() [32]byte {
 	var lastHash []byte
 
-	if !boltDB.dbExistsBucket() {
-		log.Fatalf("storage.go/dbGetLastHash. Can not get the last hash because does not exist the bucket with name '%s'", bucketName)
+	if !boltDB.dbExistsBuckets() {
+		log.Fatalf("storage.go/dbGetLastHash. Can not get the last hash because does not exist the bucket with name '%s'", bucketNameBlocks)
 		boltDB.db.Close()
 	}
 
 	err := boltDB.db.View(func(tx *bolt.Tx) error {
-		bucket := tx.Bucket([]byte(bucketName))
+		bucket := tx.Bucket([]byte(bucketNameBlocks))
 		lastHash = bucket.Get([]byte(lastHashKey))
 		return nil
 	})
@@ -70,7 +114,7 @@ func (boltDB *boltStorage) dbAddBlock(hash [32]byte, encodedBlock []byte) {
 	err := boltDB.db.Update(func(tx *bolt.Tx) error {
 		var err error
 
-		bucket := tx.Bucket([]byte(bucketName))
+		bucket := tx.Bucket([]byte(bucketNameBlocks))
 		err = bucket.Put(hash[:], encodedBlock)
 
 		if err != nil {
@@ -91,7 +135,7 @@ func (boltDB *boltStorage) dbGetEncodedBlock(hash [32]byte) []byte {
 	var encodedBlock []byte
 
 	err := boltDB.db.View(func(tx *bolt.Tx) error {
-		bucket := tx.Bucket([]byte(bucketName))
+		bucket := tx.Bucket([]byte(bucketNameBlocks))
 		encodedBlock = bucket.Get(hash[:])
 		return nil
 	})
@@ -104,29 +148,31 @@ func (boltDB *boltStorage) dbGetEncodedBlock(hash [32]byte) []byte {
 	return encodedBlock
 }
 
-// Private
+func (boltDB *boltStorage) dbStoreTrieNode(key [32]byte, value []byte) {
+	err := boltDB.db.Update(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte(bucketNameTries))
+		return bucket.Put(key[:], value)
+	})
 
-// dbExistsBucket checks if the bucket exists
-func (boltDB *boltStorage) dbExistsBucket() bool {
-	var exists bool
+	if err != nil {
+		log.Fatalf("storage.go/dbStoreTrieNode. %v", err)
+		boltDB.db.Close()
+	}
+}
 
-	boltDB.db.View(func(tx *bolt.Tx) error {
-		bucket := tx.Bucket([]byte(bucketName))
-		exists = bucket != nil
+func (boltDB *boltStorage) dbGetTrieValue(key [32]byte) []byte {
+	var encodedNode []byte
+
+	err := boltDB.db.View(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte(bucketNameTries))
+		encodedNode = bucket.Get(key[:])
 		return nil
 	})
 
-	return exists
-}
-
-// dbConnection opens the database connection
-func dbConnection(dbpath string) *bolt.DB {
-	db, err := bolt.Open(dbpath, 0600, nil)
-
 	if err != nil {
-		log.Fatalf("Failed to connect to the database: %v", err)
-		db.Close()
+		log.Fatalf("storage.go/dbGetTrieValue. %v", err)
+		boltDB.db.Close()
 	}
 
-	return db
+	return encodedNode
 }

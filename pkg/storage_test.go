@@ -15,7 +15,7 @@ func TestNewBoltStorage(t *testing.T) {
 		t.Fatal("Storage or DB connection is nil")
 	}
 
-	if !storage.dbExistsBucket() {
+	if !storage.dbExistsBuckets() {
 		t.Error("Bucket should have been created during initialization")
 	}
 }

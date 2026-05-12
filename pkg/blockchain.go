@@ -3,6 +3,7 @@ package pkg
 type Blockchain struct {
 	tip    [32]byte     // The hash of the last block in the chain
 	boltDB *boltStorage // The connection to your database (BoltDB)
+	trie   Trie         // Current Trie
 }
 
 // Iterator
@@ -30,8 +31,18 @@ func NewBlockchain(dbPath string) *Blockchain {
 	return blockchain
 }
 
-// addBlock stores a new block and updates the chain tip
+// InsertTrieValue inserts a new node in the trie
+func (bc *Blockchain) InsertTrieValue(value string) {
+	bc.trie.insert(value)
+}
+
+// AdBlock stores a new block and updates the chain tip
 func (bc *Blockchain) AddBlock(data string) {
+
+	var nodes map[[32]byte][]byte = extractKeyValues(bc.trie.node, make(map[[32]byte][]byte))
+
+	bc.storeNodes(nodes)
+
 	prevBlockHash := bc.boltDB.dbGetLastHash()
 
 	if prevBlockHash == [32]byte{} {
@@ -39,12 +50,13 @@ func (bc *Blockchain) AddBlock(data string) {
 	}
 
 	pow := newProofOfWork()
-	block := newBlock(data, [32]byte(prevBlockHash), pow.difficulty)
+	block := newBlock(data, [32]byte(prevBlockHash), bc.trie.node.Hash(), pow.difficulty)
 	pow.mine(block)
 	hash := block.getHash()
 	bc.boltDB.dbAddBlock(hash, block.serialize())
 
 	bc.tip = block.getHash()
+	bc.trie.node = nil
 }
 
 // searchBlock looks for a block by its hash
@@ -83,6 +95,27 @@ func (bc *Blockchain) ValidateChain() bool {
 	return validChain
 }
 
+// validateTrie validates integrity through hashes
+func (bc *Blockchain) validateTrie(hash [32]byte) bool {
+	serializedNode := bc.boltDB.dbGetTrieValue(hash)
+	node := deserializeNode(serializedNode)
+
+	switch n := node.(type) {
+	case *Leaf:
+
+	case *Branch:
+		for i := 0; len(n.Childs_hash) > i; i++ {
+			if n.Childs_hash[i] == [32]byte{} {
+				bc.validateTrie(n.Childs_hash[i])
+			}
+		}
+
+	case *Extension:
+
+	}
+
+}
+
 // GetDataFromBlock gets the data from a Block regarding its position being the position 0 the last block
 func (bc *Blockchain) GetDataFromBlock(pos int) string {
 	var data string
@@ -98,6 +131,13 @@ func (bc *Blockchain) GetDataFromBlock(pos int) string {
 		return false
 	})
 	return data
+}
+
+// storeNodes stores all key values from a map in db
+func (bc *Blockchain) storeNodes(nodes map[[32]byte][]byte) {
+	for key, value := range nodes {
+		bc.boltDB.dbStoreTrieNode(key, value)
+	}
 }
 
 // forEachBlock iterates over all blocks and applies the given function

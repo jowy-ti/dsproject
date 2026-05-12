@@ -11,7 +11,7 @@ func TestNewBlock(t *testing.T) {
 	prevHash := [32]byte{1, 2, 3}
 	difficulty := uint64(12)
 
-	b := newBlock(data, prevHash, difficulty)
+	b := newBlock(data, prevHash, [32]byte{}, difficulty)
 
 	if string(b.Data) != data {
 		t.Errorf("Expected data %s, got %s", data, b.Data)
@@ -40,7 +40,7 @@ func TestNewGenesisBlock(t *testing.T) {
 }
 
 func TestComputeHash(t *testing.T) {
-	b := newBlock("Hash Test", [32]byte{}, 1)
+	b := newBlock("Hash Test", [32]byte{}, [32]byte{}, 1)
 
 	hash1 := b.computeHash()
 	hash2 := b.computeHash()
@@ -60,7 +60,7 @@ func TestComputeHash(t *testing.T) {
 
 func TestSerialize(t *testing.T) {
 	// NOTE: This test will fail unless you capitalize the Block fields!
-	b := newBlock("Serialize Test", [32]byte{0xAA}, 1)
+	b := newBlock("Serialize Test", [32]byte{0xAA}, [32]byte{}, 1)
 
 	serialized := b.serialize()
 	if len(serialized) == 0 {

@@ -15,16 +15,18 @@ type Block struct {
 	Data          []byte
 	Hash          [32]byte
 	PrevBlockHash [32]byte
+	RootHash      [32]byte
 	Nonce         uint64
 	Difficulty    uint64
 	Timestamp     int64
 }
 
 // newBlock creates a new Block using the provided data and the previous block hash
-func newBlock(data string, prevBlockHash [32]byte, difficulty uint64) *Block {
+func newBlock(data string, prevBlockHash [32]byte, rootHash [32]byte, difficulty uint64) *Block {
 	block := &Block{
 		Data:          []byte(data),
 		PrevBlockHash: prevBlockHash,
+		RootHash:      rootHash,
 		Nonce:         math.MaxUint64,
 		Difficulty:    difficulty,
 		Timestamp:     time.Now().Unix(),
@@ -35,7 +37,7 @@ func newBlock(data string, prevBlockHash [32]byte, difficulty uint64) *Block {
 
 // newGenesisBlock creates the first block in the chain
 func newGenesisBlock() *Block {
-	return newBlock(global.GenesisBlockName, [32]byte{}, 0)
+	return newBlock(global.GenesisBlockName, [32]byte{}, [32]byte{}, 0)
 }
 
 func (b *Block) setHash(hash [32]byte) {
@@ -88,6 +90,7 @@ func (b *Block) computeHash() [32]byte {
 		[][]byte{
 			b.PrevBlockHash[:],
 			b.Data,
+			b.RootHash[:],
 			intToHex(uint64(b.Timestamp)),
 			intToHex(b.Difficulty),
 			intToHex(b.Nonce),
