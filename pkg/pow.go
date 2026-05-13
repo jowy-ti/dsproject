@@ -31,7 +31,6 @@ func (pow *ProofOfWork) mine(block *Block) {
 		hash = block.computeHash()
 		hashInt.SetBytes(hash[:])
 	}
-	println(block.Nonce)
 	block.setHash(hash)
 }
 

@@ -3,7 +3,6 @@ package pkg
 import (
 	"bytes"
 	"crypto/sha256"
-	global "dsproject/pkg/config"
 	"encoding/binary"
 	"encoding/gob"
 	"log"
@@ -12,7 +11,6 @@ import (
 )
 
 type Block struct {
-	Data          []byte
 	Hash          [32]byte
 	PrevBlockHash [32]byte
 	RootHash      [32]byte
@@ -22,9 +20,8 @@ type Block struct {
 }
 
 // newBlock creates a new Block using the provided data and the previous block hash
-func newBlock(data string, prevBlockHash [32]byte, rootHash [32]byte, difficulty uint64) *Block {
+func newBlock(prevBlockHash [32]byte, rootHash [32]byte, difficulty uint64) *Block {
 	block := &Block{
-		Data:          []byte(data),
 		PrevBlockHash: prevBlockHash,
 		RootHash:      rootHash,
 		Nonce:         math.MaxUint64,
@@ -37,7 +34,7 @@ func newBlock(data string, prevBlockHash [32]byte, rootHash [32]byte, difficulty
 
 // newGenesisBlock creates the first block in the chain
 func newGenesisBlock() *Block {
-	return newBlock(global.GenesisBlockName, [32]byte{}, [32]byte{}, 0)
+	return newBlock([32]byte{}, [32]byte{}, 0)
 }
 
 func (b *Block) setHash(hash [32]byte) {
@@ -89,7 +86,6 @@ func (b *Block) computeHash() [32]byte {
 	headers := bytes.Join(
 		[][]byte{
 			b.PrevBlockHash[:],
-			b.Data,
 			b.RootHash[:],
 			intToHex(uint64(b.Timestamp)),
 			intToHex(b.Difficulty),
@@ -107,12 +103,95 @@ func intToHex(num uint64) []byte {
 	return buff
 }
 
-// Old compute hash
-// func (pow *ProofOfWork) computeHash(nonce uint64, difficulty uint64) [32]byte {
-// 	timestamp := []byte(strconv.FormatInt(pow.block.timestamp, 10)) // converted to string to produce the same results with different CPU architectures
-// 	nonceB := []byte(strconv.FormatUint(nonce, 10))
-// 	difficultyB := []byte(strconv.FormatUint(difficulty, 10))
-// 	headers := bytes.Join([][]byte{pow.block.prevBlockHash, pow.block.data, timestamp, nonceB, difficultyB}, []byte{})
+// validateTrie validates integrity through hashes. Should be passed the root hash of the Trie
+func (b *Block) validateTrie(hash [32]byte, boltDB *boltStorage) bool {
+	serializedNode := boltDB.dbGetTrieValue(hash)
+	node := deserializeNode(serializedNode)
+	// fmt.Printf("%x", hash)
+	// println()
 
-// 	return sha256.Sum256(headers)
-// }
+	if serializedNode == nil {
+		return false
+	}
+
+	switch n := node.(type) {
+	case *Branch:
+		for i := 0; len(n.Childs_hash) > i; i++ {
+			if n.Childs_hash[i] != [32]byte{} {
+				if !b.validateTrie(n.Childs_hash[i], boltDB) {
+					return false
+				}
+			}
+		}
+
+	case *Extension:
+		if !b.validateTrie(n.Next_hash, boltDB) {
+			return false
+		}
+	}
+	return hash == node.Hash()
+}
+
+// extractKeyValues retrieves a map with the hash and serialized node.
+func getHashesValuesStored(hash [32]byte, boltDB *boltStorage, m map[[32]byte]string) map[[32]byte]string {
+	serializedNode := boltDB.dbGetTrieValue(hash)
+	node := deserializeNode(serializedNode)
+
+	if serializedNode == nil {
+		return nil
+	}
+
+	switch n := node.(type) {
+	case *Leaf:
+		m[n.Hash()] = string(n.Value)
+
+	case *Branch:
+		for i := 0; len(n.Childs_hash) > i; i++ {
+			if n.Childs_hash[i] != [32]byte{} {
+				getHashesValuesStored(n.Childs_hash[i], boltDB, m)
+			}
+		}
+
+	case *Extension:
+		getHashesValuesStored(n.Next_hash, boltDB, m)
+	}
+	return m
+}
+
+func (b *Block) getTrieInfo(boltDB *boltStorage) map[[32]byte]string {
+	return getHashesValuesStored(b.RootHash, boltDB, make(map[[32]byte]string))
+}
+
+// verifyValue verifies if the value is inside the Trie
+func verifyValue(boltDB *boltStorage, hash [32]byte, value string) bool {
+	serializedNode := boltDB.dbGetTrieValue(hash)
+	node := deserializeNode(serializedNode)
+
+	if serializedNode == nil {
+		return false
+	}
+
+	switch n := node.(type) {
+	case *Leaf:
+		return value == string(n.Value)
+
+	case *Branch:
+		for i := 0; len(n.Childs_hash) > i; i++ {
+			if n.Childs_hash[i] != [32]byte{} {
+				if verifyValue(boltDB, n.Childs_hash[i], value) {
+					return true
+				}
+			}
+		}
+
+	case *Extension:
+		if verifyValue(boltDB, n.Next_hash, value) {
+			return true
+		}
+	}
+	return false
+}
+
+func (b *Block) verifyValueInTrie(boltDB *boltStorage, value string) bool {
+	return verifyValue(boltDB, b.RootHash, value)
+}

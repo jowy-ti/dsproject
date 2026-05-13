@@ -22,6 +22,10 @@ func init() {
 	gob.Register(&Leaf{})
 }
 
+func (t *Trie) getKeysValues() map[[32]byte][]byte {
+	return extractKeyValues(t.node, make(map[[32]byte][]byte))
+}
+
 func (t *Trie) insert(value string) {
 	val := []byte(value)
 	path := bytesToNibbles(sha256.Sum256(val))

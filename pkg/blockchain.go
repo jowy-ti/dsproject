@@ -12,6 +12,18 @@ type BlockchainIterator struct {
 	boltDB      *boltStorage
 }
 
+// forEachBlock iterates over all blocks and applies the given function
+func (bc *Blockchain) forEachBlock(fn func(*Block) bool) {
+	it := bc.newIterator()
+
+	for it.validHash() {
+		block := it.getBlockAndAdvance()
+		if fn(block) {
+			break
+		}
+	}
+}
+
 // newBlockchain initializes the blockchain and creates the genesis block if needed
 func NewBlockchain(dbPath string) *Blockchain {
 	boltDB := newBoltStorage(dbPath)
@@ -36,13 +48,32 @@ func (bc *Blockchain) InsertTrieValue(value string) {
 	bc.trie.insert(value)
 }
 
-// AdBlock stores a new block and updates the chain tip
-func (bc *Blockchain) AddBlock(data string) {
+func (bc *Blockchain) VerifyValueInBlock(pos int, value string) bool {
+	var found bool = false
+	cont := 0
 
-	var nodes map[[32]byte][]byte = extractKeyValues(bc.trie.node, make(map[[32]byte][]byte))
+	bc.forEachBlock(func(b *Block) bool {
+		if cont == pos {
+			found = b.verifyValueInTrie(bc.boltDB, value)
+			return true
+		}
+		cont++
+		return false
+	})
+
+	return found
+}
+
+// AdBlock stores a new block and updates the chain tip
+func (bc *Blockchain) AddBlock() {
+	// PrintTrie(bc.trie.node)
+	var nodes map[[32]byte][]byte = bc.trie.getKeysValues()
+	// for key, _ := range nodes {
+	// 	fmt.Printf("%x", key)
+	// 	println()
+	// }
 
 	bc.storeNodes(nodes)
-
 	prevBlockHash := bc.boltDB.dbGetLastHash()
 
 	if prevBlockHash == [32]byte{} {
@@ -50,28 +81,13 @@ func (bc *Blockchain) AddBlock(data string) {
 	}
 
 	pow := newProofOfWork()
-	block := newBlock(data, [32]byte(prevBlockHash), bc.trie.node.Hash(), pow.difficulty)
+	block := newBlock([32]byte(prevBlockHash), bc.trie.node.Hash(), pow.difficulty)
 	pow.mine(block)
 	hash := block.getHash()
 	bc.boltDB.dbAddBlock(hash, block.serialize())
 
 	bc.tip = block.getHash()
 	bc.trie.node = nil
-}
-
-// searchBlock looks for a block by its hash
-func (bc *Blockchain) SearchBlock(hash [32]byte) *Block {
-	var block *Block
-
-	bc.forEachBlock(func(b *Block) bool {
-		if b.getHash() == hash {
-			block = b
-			return true
-		}
-		return false
-	})
-
-	return block
 }
 
 // validateChain validates the correctness of hashes in the chain
@@ -87,6 +103,11 @@ func (bc *Blockchain) ValidateChain() bool {
 
 		if b.getPrevBlockHash() == [32]byte{} {
 			validChain = true
+			return true
+		}
+
+		if !b.validateTrie(b.RootHash, bc.boltDB) {
+			return true
 		}
 
 		return false
@@ -95,35 +116,14 @@ func (bc *Blockchain) ValidateChain() bool {
 	return validChain
 }
 
-// validateTrie validates integrity through hashes
-func (bc *Blockchain) validateTrie(hash [32]byte) bool {
-	serializedNode := bc.boltDB.dbGetTrieValue(hash)
-	node := deserializeNode(serializedNode)
-
-	switch n := node.(type) {
-	case *Leaf:
-
-	case *Branch:
-		for i := 0; len(n.Childs_hash) > i; i++ {
-			if n.Childs_hash[i] == [32]byte{} {
-				bc.validateTrie(n.Childs_hash[i])
-			}
-		}
-
-	case *Extension:
-
-	}
-
-}
-
 // GetDataFromBlock gets the data from a Block regarding its position being the position 0 the last block
-func (bc *Blockchain) GetDataFromBlock(pos int) string {
-	var data string
+func (bc *Blockchain) GetDataFromBlock(pos int) map[[32]byte]string {
+	var data map[[32]byte]string
 	cont := 0
 
 	bc.forEachBlock(func(b *Block) bool {
 		if cont == pos {
-			data = string(b.Data)
+			data = b.getTrieInfo(bc.boltDB)
 			return true
 		}
 
@@ -137,18 +137,6 @@ func (bc *Blockchain) GetDataFromBlock(pos int) string {
 func (bc *Blockchain) storeNodes(nodes map[[32]byte][]byte) {
 	for key, value := range nodes {
 		bc.boltDB.dbStoreTrieNode(key, value)
-	}
-}
-
-// forEachBlock iterates over all blocks and applies the given function
-func (bc *Blockchain) forEachBlock(fn func(*Block) bool) {
-	it := bc.newIterator()
-
-	for it.validHash() {
-		block := it.getBlockAndAdvance()
-		if fn(block) {
-			break
-		}
 	}
 }
 
@@ -172,7 +160,3 @@ func (it *BlockchainIterator) getBlockAndAdvance() *Block {
 func (it *BlockchainIterator) validHash() bool {
 	return it.currentHash != [32]byte{}
 }
-
-// func (it *BlockchainIterator) Reset() {
-// 	it.currentHash = it.boltDB.dbGetLastHash()
-// }
