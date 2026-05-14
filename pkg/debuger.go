@@ -272,15 +272,14 @@ func (t *Trie) insertPath(path []byte, value string) {
 	}
 }
 
-func PrintTriedb(node Node) {
-	printNode(node, "", true)
+func PrintTriedb(boltDB *boltStorage, rootHash [32]byte) {
+	printNodedb(boltDB, rootHash, "", true)
 }
 
-func printNodedb(
-	node Node,
-	prefix string,
-	isLast bool,
-) {
+func printNodedb(boltDB *boltStorage, hash [32]byte, prefix string, isLast bool) {
+
+	serializedNode := boltDB.dbGetTrieValue(hash)
+	node := deserializeNode(serializedNode)
 
 	if node == nil {
 		fmt.Printf("%s<nil>\n", prefix)
@@ -352,8 +351,9 @@ func printNodedb(
 			shortHash(n.Hash()),
 		)
 
-		printNode(
-			n.next_branch,
+		printNodedb(
+			boltDB,
+			n.Next_hash,
 			nextPrefix,
 			true,
 		)
@@ -379,15 +379,16 @@ func printNodedb(
 		// Count children
 		childIndexes := make([]int, 0)
 
-		for i, child := range n.childs {
-			if child != nil {
+		for i, child := range n.Childs_hash {
+			if child != [32]byte{} {
 				childIndexes = append(childIndexes, i)
 			}
 		}
 
 		for i, index := range childIndexes {
 
-			child := n.childs[index]
+			serializedNode := boltDB.dbGetTrieValue(n.Childs_hash[index])
+			child := deserializeNode(serializedNode)
 
 			lastChild := i == len(childIndexes)-1
 

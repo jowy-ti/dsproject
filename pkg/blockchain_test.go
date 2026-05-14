@@ -75,7 +75,7 @@ func newTestBlockchain() (*Blockchain, func()) {
 	bc := NewBlockchain(global.TestDBPath)
 
 	cleanup := func() {
-		bc.boltDB.db.Close()
+		bc.BoltDB.db.Close()
 		os.Remove(global.TestDBPath)
 	}
 

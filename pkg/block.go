@@ -193,5 +193,8 @@ func verifyValue(boltDB *boltStorage, hash [32]byte, value string) bool {
 }
 
 func (b *Block) verifyValueInTrie(boltDB *boltStorage, value string) bool {
+	if b.RootHash == [32]byte{} {
+		return false
+	}
 	return verifyValue(boltDB, b.RootHash, value)
 }

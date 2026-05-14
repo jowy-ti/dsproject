@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
 )
 
@@ -384,22 +385,53 @@ func TestExtractKeyValues(t *testing.T) {
 
 func TestDebugTrie(t *testing.T) {
 
+	var paths [][]byte = [][]byte{
+		{1, 2, 3, 4},
+		{1, 2, 3, 5},
+		{1, 2, 8, 9},
+		{1, 7, 1, 1},
+		{1, 7, 1, 2},
+		{1, 7, 9, 9},
+		{5, 5, 5, 5},
+		{5, 5, 6, 6},
+		{9, 1, 1, 1},
+	}
+
 	var trie Trie
 
-	// trie.insertPath([]byte{1, 2, 3, 4}, "A")
-	// trie.insertPath([]byte{1, 2, 3, 5}, "B")
-	// trie.insertPath([]byte{1, 7, 9, 4}, "C")
-	// trie.insertPath([]byte{5, 5, 5, 6}, "D")
-
-	trie.insertPath([]byte{1, 2, 3, 4}, "A")
-	trie.insertPath([]byte{1, 2, 3, 5}, "B")
-	trie.insertPath([]byte{1, 2, 8, 9}, "C")
-	trie.insertPath([]byte{1, 7, 1, 1}, "D")
-	trie.insertPath([]byte{1, 7, 1, 2}, "E")
-	trie.insertPath([]byte{1, 7, 9, 9}, "F")
-	trie.insertPath([]byte{5, 5, 5, 5}, "G")
-	trie.insertPath([]byte{5, 5, 6, 6}, "H")
-	trie.insertPath([]byte{9, 1, 1, 1}, "I")
-
+	trie.insertPath(paths[0], "A")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "A", paths[0])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[1], "B")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "B", paths[1])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[2], "C")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "C", paths[2])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[3], "D")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "D", paths[3])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[4], "E")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "E", paths[4])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[5], "F")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "F", paths[5])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[6], "G")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "G", paths[6])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[7], "H")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "H", paths[7])
+	PrintTrie(trie.node)
+	print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+	trie.insertPath(paths[8], "I")
+	fmt.Printf("Inserted Value: %s, Path: %v\n\n", "I", paths[8])
 	PrintTrie(trie.node)
 }

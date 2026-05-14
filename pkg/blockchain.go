@@ -2,7 +2,7 @@ package pkg
 
 type Blockchain struct {
 	tip    [32]byte     // The hash of the last block in the chain
-	boltDB *boltStorage // The connection to your database (BoltDB)
+	BoltDB *boltStorage // The connection to your database (BoltDB)
 	trie   Trie         // Current Trie
 }
 
@@ -37,7 +37,7 @@ func NewBlockchain(dbPath string) *Blockchain {
 
 	blockchain := &Blockchain{
 		tip:    [32]byte(tip),
-		boltDB: boltDB,
+		BoltDB: boltDB,
 	}
 
 	return blockchain
@@ -54,7 +54,7 @@ func (bc *Blockchain) VerifyValueInBlock(pos int, value string) bool {
 
 	bc.forEachBlock(func(b *Block) bool {
 		if cont == pos {
-			found = b.verifyValueInTrie(bc.boltDB, value)
+			found = b.verifyValueInTrie(bc.BoltDB, value)
 			return true
 		}
 		cont++
@@ -74,7 +74,7 @@ func (bc *Blockchain) AddBlock() {
 	// }
 
 	bc.storeNodes(nodes)
-	prevBlockHash := bc.boltDB.dbGetLastHash()
+	prevBlockHash := bc.BoltDB.dbGetLastHash()
 
 	if prevBlockHash == [32]byte{} {
 		panic("AddBlock. There are not blocks in the chain")
@@ -84,7 +84,7 @@ func (bc *Blockchain) AddBlock() {
 	block := newBlock([32]byte(prevBlockHash), bc.trie.node.Hash(), pow.difficulty)
 	pow.mine(block)
 	hash := block.getHash()
-	bc.boltDB.dbAddBlock(hash, block.serialize())
+	bc.BoltDB.dbAddBlock(hash, block.serialize())
 
 	bc.tip = block.getHash()
 	bc.trie.node = nil
@@ -106,7 +106,7 @@ func (bc *Blockchain) ValidateChain() bool {
 			return true
 		}
 
-		if !b.validateTrie(b.RootHash, bc.boltDB) {
+		if !b.validateTrie(b.RootHash, bc.BoltDB) {
 			return true
 		}
 
@@ -117,34 +117,46 @@ func (bc *Blockchain) ValidateChain() bool {
 }
 
 // GetDataFromBlock gets the data from a Block regarding its position being the position 0 the last block
-func (bc *Blockchain) GetDataFromBlock(pos int) map[[32]byte]string {
+func (bc *Blockchain) GetDataFromBlock(pos int) (values map[[32]byte]string, blk *Block) {
 	var data map[[32]byte]string
+	var block *Block
 	cont := 0
 
 	bc.forEachBlock(func(b *Block) bool {
 		if cont == pos {
-			data = b.getTrieInfo(bc.boltDB)
+			data = b.getTrieInfo(bc.BoltDB)
+			block = b
 			return true
 		}
 
 		cont++
 		return false
 	})
-	return data
+	return data, block
 }
 
 // storeNodes stores all key values from a map in db
 func (bc *Blockchain) storeNodes(nodes map[[32]byte][]byte) {
 	for key, value := range nodes {
-		bc.boltDB.dbStoreTrieNode(key, value)
+		bc.BoltDB.dbStoreTrieNode(key, value)
 	}
+}
+
+func (bc *Blockchain) GetChainLength() int {
+	cont := 0
+
+	bc.forEachBlock(func(b *Block) bool {
+		cont++
+		return false
+	})
+	return cont
 }
 
 // newIterator creates an iterator starting from the tip
 func (bc *Blockchain) newIterator() *BlockchainIterator {
 	return &BlockchainIterator{
 		currentHash: bc.tip,
-		boltDB:      bc.boltDB,
+		boltDB:      bc.BoltDB,
 	}
 }
 
@@ -159,4 +171,20 @@ func (it *BlockchainIterator) getBlockAndAdvance() *Block {
 // validHash checks if the iterator has a valid current position
 func (it *BlockchainIterator) validHash() bool {
 	return it.currentHash != [32]byte{}
+}
+
+// debugger
+
+func (bc *Blockchain) PrintBlockTrie(posBlock int) {
+	cont := 0
+
+	bc.forEachBlock(func(b *Block) bool {
+		if cont == posBlock {
+			PrintTriedb(bc.BoltDB, b.RootHash)
+			return true
+		}
+
+		cont++
+		return false
+	})
 }
