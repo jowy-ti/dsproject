@@ -139,9 +139,9 @@ func main() {
 			chainLength := bc.GetChainLength()
 
 			for i := range chainLength {
-				fmt.Printf("%d ", i)
+				fmt.Printf("---[%d]", i)
 			}
-			print("<- Genesis Block\n")
+			print(" <- Genesis Block\n")
 		},
 	}
 
