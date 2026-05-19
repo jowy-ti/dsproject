@@ -1,0 +1,157 @@
+% Unofficial University of Lethbridge Poster template.
+% A fork of unofficial University of Alberta Poster template: 
+% which is a fork of Yale template: https://www.overleaf.com/latex/templates/yale-poster-template/rjpgqfgvsjcv
+% which is a fork of the UMich template https://www.overleaf.com/latex/templates/university-of-michigan-umich-poster-template/xpnqzzxwbjzc
+% which is fork of the MSU template https://www.overleaf.com/latex/templates/an-unofficial-poster-template-for-michigan-state-university/wnymbgpxnnwd
+% which is a fork of https://www.overleaf.com/latex/templates/an-unofficial-poster-template-for-new-york-university/krgqtqmzdqhg
+% which is a fork of https://github.com/anishathalye/gemini
+% also refer to https://github.com/k4rtik/uchicago-poster
+
+
+
+\documentclass[final]{beamer}
+
+% ====================
+% Packages
+% ====================
+
+\usepackage[T1]{fontenc}
+ \usepackage[utf8]{luainputenc}
+\usepackage{lmodern}
+\usepackage[size=a1, orientation=landscape, scale=1.3]{beamerposter}
+\usetheme{gemini}
+\usecolortheme{msu}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.14}
+\usepackage{anyfontsize}
+
+% ====================
+% Lengths
+% ====================
+
+% If you have N columns, choose \sepwidth and \colwidth such that
+% (N+1)*\sepwidth + N*\colwidth = \paperwidth
+\newlength{\sepwidth}
+\newlength{\colwidth}
+\setlength{\sepwidth}{0.01\paperwidth}
+\setlength{\colwidth}{0.48\paperwidth}
+
+\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+
+% ====================
+% Title
+% ====================
+
+\title{Implementation of a Basic Blockchain with PoW and Merkle Patricia Tries}
+
+\author{Joel González Jiménez}
+
+\institute[shortinst]{Master in Innovation and Research in Informatics (MIRI) | Computer Networks \& Distributed Systems }
+
+
+% use this to include logos on the left and/or right side of the header:
+% \logoright{\includegraphics[height=8cm]{logos/UofL_Landscape_RGB_FullColourRev.png}}
+
+
+\begin{document}
+
+
+\begin{frame}[t]
+\begin{columns}[t]
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+  \begin{block}{\LARGE 1. Objectives}
+  	
+  	\Large
+
+    \begin{enumerate}
+    	\item Blockchain from scratch in Go
+    	\item Implementation of Proof-of-Work (PoW) as consensus mechanism
+    	\item Build a database structure based on Merkle Patricia Trie (MPT)
+    \end{enumerate}
+    
+  \end{block}
+  
+  \begin{block}{\LARGE 2. Capabilities}
+  	
+  	\Large
+  	
+  	\begin{itemize}
+  		\item Block immutability
+  		\item Lightweight Verification (MPT Proofs)
+  		\item Persistant Storage
+  		\item Debuging tools and tests
+  	\end{itemize}
+  	
+  \end{block}
+  
+  \begin{block}{\LARGE 3. Merkle Patricia Trie (MPT) State}
+  	\vspace{1em}
+  	\Large
+  	\begin{minipage}[c]{0.3\linewidth}
+		\begin{tabular}{ll}
+			\toprule
+			\textbf{Key} & \textbf{Value} \\
+			\midrule
+			0xA7333 & DUCK \\
+			0xA73EB & PIE \\
+			\bottomrule
+		\end{tabular}
+	\end{minipage}% 
+	\hfill
+  	\begin{minipage}[c]{0.65\linewidth}
+	  	\begin{center}
+	  		\includegraphics[width=1\linewidth]{figures/MPT.pdf}
+	  		\centering
+	  	\end{center}
+	\end{minipage}
+  	
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+	
+	\begin{block}{\LARGE 4. Consensus (PoW)}
+		\Large
+		\vspace{-1em}
+		\begin{equation*}
+			\text{SHA256}(\text{BlockData} \parallel \text{Nonce}) < \text{Target}
+		\end{equation*}
+		\vspace{-1em}
+		\begin{equation*}
+			\text{Target} = 1 << (\text{HashLength} - \text{Difficulty})
+		\end{equation*}
+		
+		\begin{center}
+			\includegraphics[width=0.75\linewidth]{figures/PoW.jpg}
+			\centering
+			\setlength{\fboxsep}{1em}
+		\end{center}
+	\end{block}
+	
+	\begin{block}{\LARGE 5. Class diagram}
+		
+		\begin{center}
+			\includegraphics[width=1\linewidth]{figures/simplest_diagram.png}
+			%    	\includesvg{figures/complete_diagram.svg}
+			\centering
+			\setlength{\fboxsep}{1em}
+		\end{center}
+		
+	\end{block}
+
+\end{column}
+
+\separatorcolumn
+\end{columns}
+\end{frame}
+
+\end{document}
