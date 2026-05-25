@@ -45,7 +45,7 @@ func printNode(
 		)
 
 		fmt.Printf(
-			"%s    Path  : %v\n",
+			"%s    Path  : % x\n",
 			nextPrefix,
 			n.Path_unique,
 		)
@@ -167,7 +167,7 @@ func printNodeWithLabel(
 		)
 
 		fmt.Printf(
-			"%s%sPath  : %v\n",
+			"%s%sPath  : % x\n",
 			prefix,
 			indent,
 			n.Path_unique,
@@ -310,7 +310,7 @@ func printNodedb(boltDB *boltStorage, hash [32]byte, prefix string, isLast bool)
 		)
 
 		fmt.Printf(
-			"%s    Path  : %v\n",
+			"%s    Path  : % x\n",
 			nextPrefix,
 			n.Path_unique,
 		)

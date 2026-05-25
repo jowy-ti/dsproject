@@ -87,7 +87,7 @@ func (bc *Blockchain) AddBlock() {
 	bc.BoltDB.dbAddBlock(hash, block.serialize())
 
 	bc.tip = block.getHash()
-	bc.trie.node = nil
+	// bc.trie.node = nil
 }
 
 // validateChain validates the correctness of hashes in the chain
