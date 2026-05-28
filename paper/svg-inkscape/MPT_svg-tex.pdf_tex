@@ -1,0 +1,122 @@
+%% Creator: Inkscape 1.2.2 (b0a8486541, 2022-12-01), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'MPT_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{336.75bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.89309577)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{MPT_svg-tex.pdf}}%
+    \put(0.89198218,0.73830735){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Root\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{MPT_svg-tex.pdf}}%
+    \put(0.25723831,0.73608018){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}shared nible(s)\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{MPT_svg-tex.pdf}}%
+    \put(0.25723831,0.66926503){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}A73\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{MPT_svg-tex.pdf}}%
+    \put(0.49109131,0.73608018){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}next node\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{MPT_svg-tex.pdf}}%
+    \put(0.35746102,0.82071269){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Extension Node\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{MPT_svg-tex.pdf}}%
+    \put(0.14142539,0.11247216){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}key-end\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{MPT_svg-tex.pdf}}%
+    \put(0.14142539,0.04565702){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}3\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{MPT_svg-tex.pdf}}%
+    \put(0.34187082,0.04565702){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}DUCK\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{MPT_svg-tex.pdf}}%
+    \put(0.34187082,0.11247216){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}value\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{MPT_svg-tex.pdf}}%
+    \put(0.24387528,0.18374165){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Leaf Node\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{MPT_svg-tex.pdf}}%
+    \put(0.65367483,0.11247216){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}key-end\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{MPT_svg-tex.pdf}}%
+    \put(0.65367483,0.04565702){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}B\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{MPT_svg-tex.pdf}}%
+    \put(0.85412027,0.04565702){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}PIE\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{MPT_svg-tex.pdf}}%
+    \put(0.85412027,0.11247216){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}value\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{MPT_svg-tex.pdf}}%
+    \put(0.75389755,0.18374165){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Leaf Node\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{MPT_svg-tex.pdf}}%
+    \put(0.13919822,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}0\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{MPT_svg-tex.pdf}}%
+    \put(0.18374165,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{MPT_svg-tex.pdf}}%
+    \put(0.22828508,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{MPT_svg-tex.pdf}}%
+    \put(0.27282851,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}3\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{MPT_svg-tex.pdf}}%
+    \put(0.31737194,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}4\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{MPT_svg-tex.pdf}}%
+    \put(0.36191537,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}5\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=22]{MPT_svg-tex.pdf}}%
+    \put(0.4064588,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}6\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=23]{MPT_svg-tex.pdf}}%
+    \put(0.45100223,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}7\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=24]{MPT_svg-tex.pdf}}%
+    \put(0.49554566,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}8\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=25]{MPT_svg-tex.pdf}}%
+    \put(0.58463252,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}A\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=26]{MPT_svg-tex.pdf}}%
+    \put(0.54008909,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}9\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=27]{MPT_svg-tex.pdf}}%
+    \put(0.67371938,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}C\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=28]{MPT_svg-tex.pdf}}%
+    \put(0.62917595,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}B\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=29]{MPT_svg-tex.pdf}}%
+    \put(0.80734967,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}F\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=30]{MPT_svg-tex.pdf}}%
+    \put(0.76280624,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}E\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=31]{MPT_svg-tex.pdf}}%
+    \put(0.71826281,0.38418708){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}D\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=32]{MPT_svg-tex.pdf}}%
+    \put(0.47995546,0.46436526){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Branch Node\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=33]{MPT_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%
