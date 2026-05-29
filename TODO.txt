@@ -1,0 +1,7 @@
+Talk about the system architecture
+Explain more classes
+Show the complete diagram in the repository on github and cite
+Cite the github repository
+Cite the GOB site
+Talk about related work
+Refine paper

@@ -1,5 +1,6 @@
 \documentclass[10pt, conference]{IEEEtran}
 \usepackage{cite}
+\usepackage{url}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
@@ -8,6 +9,7 @@
 \usepackage{listings}
 \usepackage{svg}
 \usepackage{placeins}
+
 \graphicspath{{./images/}}
 
 % Go Code Formatting Setup
@@ -46,9 +48,11 @@
 	
 	This project is a hands-on implementation of an experimental blockchain environment designed to deliberately isolate and study these core foundational subsystems, focusing comprehensively on:
 	\begin{itemize}
-		\item \textbf{Consensus Mechanism (PoW):} The throttling of ledger updates through intensive algorithmic resource consumption.
-		\item \textbf{Merkle Patricia Trie (MPT):} The design of an authenticated, radix-based data organization layer capable of emitting cryptographic proofs.
+		\item \textbf{Consensus Mechanism (PoW):} The throttling of ledger updates through intensive algorithmic resource consumption, provided by Bitcoin \cite{nakamoto2008bitcoin}.
+		\item \textbf{Merkle Patricia Trie (MPT):} The design of an authenticated, radix-based data organization layer capable of emitting cryptographic proofs, provided by Ethereum \cite{wood2014ethereum}.
 	\end{itemize}
+	
+	\section{Related Work}
 	
 	\section{Core System Capabilities}
 	The developed platform provides a robust research testbed that successfully demonstrates four primary system capabilities:
@@ -65,7 +69,7 @@
 	\subsection{Architectural Departures from Standard MPT}
 	Unlike generalized global world-state implementations (such as Ethereum), this framework enforces four explicit structural constraints:
 	\begin{enumerate}
-		\item \textbf{GOB Encoding Framework:} The system substitutes standard Recursive Length Prefix (RLP) serialization for Go's native \texttt{GOB} binary encoder to natively streamline abstract interface polymorphism across node variations.
+		\item \textbf{GOB Encoding Framework:} The system substitutes standard Recursive Length Prefix (RLP) \cite{wood2014ethereum} serialization for Go's native \texttt{GOB} binary encoder to natively streamline abstract interface polymorphism across node variations.
 		\item \textbf{Value-Free Branch Nodes:} Standard MPT branch nodes store a terminating value slot to accommodate variable-length paths. In this framework, \textbf{Branch nodes do not contain a value} field because every key in the sub-tree shares a strictly uniform static length constraint.
 		\item \textbf{Self-Referential Content Addressing:} The path/key utilized to navigate to a value inside the trie is uniquely derived as the SHA-256 hash of the target value itself:
 		$$\text{Path} = \text{SHA256}(\text{Value})$$
@@ -114,8 +118,10 @@
 	\end{equation}
 	Once a nonce is discovered that positions the integer representation of the block hash below the calculated target line $T$, the mining cycle terminates, and the block is broadcast to the storage management layer.
 	
-	\section{System Architecture and Class Diagram}
+	\section{Architectural Design}
 	The architectural design strictly prioritizes modularity, enforcing a highly structured, acyclic dependency graph among the application classes to clearly delineate operational responsibilities.
+	
+	\subsection{Class Diagram}
 	
 	\begin{itemize}
 		\item \textbf{The Blockchain Class:} Acts as the primary entry point, maintaining a direct strong composition relationship over the active \texttt{Trie} model and overseeing database transactions.
@@ -131,6 +137,8 @@
 	\end{figure*}
 	
 	\FloatBarrier
+	
+	\subsection{System Architecture}
 	
 	\begin{figure}[htbp]
 		\centering
@@ -152,5 +160,8 @@
 	
 	\section{Conclusion and Future Work}
 	This paper successfully presented a modular, clean research framework implemented in Go that successfully isolates and studies Proof-of-Work constraints and specialized Merkle Patricia Trie behaviors. By mapping paths strictly via content hashes, the MPT architecture successfully optimizes out branch value requirements. Future milestones will focus on transitioning this block-centric log structure into a cumulative, rolling world-state engine by persisting root hash variables across block headers, replacing the GOB encoder with a deterministic RLP framework, and establishing cryptographic signature enforcement mechanisms.
+	
+	\bibliographystyle{IEEEtran}
+	\bibliography{references}
 	
 \end{document}

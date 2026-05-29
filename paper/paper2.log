@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.10.13)  28 MAY 2026 19:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.10.13)  29 MAY 2026 19:48
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -118,6 +118,10 @@ LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 332.
 Package: cite 2015/02/27  v 5.5
 )
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2023/05/13 v2.17o AMS math features
 \@mathmargin=\skip51
@@ -165,7 +169,7 @@ LaTeX Info: Redefining \smash on input line 940.
 LaTeX Info: Redefining \relbar on input line 970.
 LaTeX Info: Redefining \Relbar on input line 971.
 \c@MaxMatrixCols=\count274
-\dotsspace@=\muskip16
+\dotsspace@=\muskip17
 \c@parentequation=\count275
 \dspbrk@lvl=\count276
 \tag@help=\toks19
@@ -441,20 +445,20 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 (./paper2.aux)
 \openout1 = `paper2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
-LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -480,34 +484,34 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \c@lstlisting=\count308
-LaTeX Font Info:    Trying to load font information for U+msa on input line 49.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 51.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 51.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 5
-8.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
+2.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Underfull \hbox (badness 2799) in paragraph at lines 66--68
+Underfull \hbox (badness 2799) in paragraph at lines 70--72
 []\OT1/ptm/m/n/10 Unlike gen-er-al-ized global world-state im-ple-men-ta-tions
  []
 
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 6
-8.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 7
+2.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 6708) in paragraph at lines 80--81
+Underfull \hbox (badness 6708) in paragraph at lines 84--85
 []\OT1/ptm/b/n/10 Branch Node: \OT1/ptm/m/n/10 Is an ar-ray of 16 slot hashes
  []
 
@@ -517,7 +521,7 @@ dist/fonts/enc/dvips/base/8r.enc}
 
 ]
 Package svg Info: Last page of `./svg-inkscape/MPT_svg-tex.pdf' is 33 on input 
-line 86.
+line 90.
  (./svg-inkscape/MPT_svg-tex.pdf_tex
 <./svg-inkscape/MPT_svg-tex.pdf, id=19, page=1, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
@@ -718,7 +722,7 @@ Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page33 used on input
 line 120.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
 )
-Underfull \hbox (badness 1521) in paragraph at lines 122--123
+Underfull \hbox (badness 1521) in paragraph at lines 128--129
 []\OT1/ptm/b/n/10 The Stor-age Man-age-ment Layer: \OT1/ptm/m/n/10 Uti-lizes an
  in-
  []
@@ -726,7 +730,7 @@ Underfull \hbox (badness 1521) in paragraph at lines 122--123
 <./images/simplest_diagram.png, id=52, 1896.08376pt x 911.405pt>
 File: ./images/simplest_diagram.png Graphic file (type png)
 <use ./images/simplest_diagram.png>
-Package pdftex.def Info: ./images/simplest_diagram.png  used on input line 128.
+Package pdftex.def Info: ./images/simplest_diagram.png  used on input line 134.
 
 (pdftex.def)             Requested size: 516.0pt x 248.0296pt.
 [2 <./svg-inkscape/MPT_svg-tex.pdf> <./svg-inkscape/MPT_svg-tex.pdf
@@ -859,7 +863,7 @@ pdfTeX warning: /usr/bin/pdflatex (file ./svg-inkscape/MPT_svg-tex.pdf): PDF in
 clusion: multiple pdfs with page group included in a single page
 >]
 Package svg Info: Last page of `./svg-inkscape/architecture_svg-tex.pdf' is 1 o
-n input line 137.
+n input line 145.
  (./svg-inkscape/architecture_svg-tex.pdf_tex
 <./svg-inkscape/architecture_svg-tex.pdf, id=60, page=1, 362.47922pt x 261.9787
 4pt>
@@ -868,7 +872,7 @@ File: ./svg-inkscape/architecture_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/architecture_svg-tex.pdf , page1 used o
 n input line 56.
 (pdftex.def)             Requested size: 252.0pt x 182.13266pt.
-)
+) (./paper2.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -888,11 +892,11 @@ L3 programming layer <2024-01-22>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 8298 strings out of 474222
- 149679 string characters out of 5748732
+ 8418 strings out of 474222
+ 151336 string characters out of 5748732
  1952975 words of memory out of 5000000
- 30371 multiletter control sequences out of 15000+600000
- 591071 words of font info for 96 fonts, out of 8000000 for 9000
+ 30476 multiletter control sequences out of 15000+600000
+ 595307 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,14n,93p,823b,481s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
@@ -903,7 +907,7 @@ f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
 /utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper2.pdf (3 pages, 254736 bytes).
+Output written on paper2.pdf (3 pages, 256632 bytes).
 PDF statistics:
  166 PDF objects out of 1000 (max. 8388607)
  77 compressed objects within 1 object stream
