@@ -52,7 +52,14 @@
 		\item \textbf{Merkle Patricia Trie (MPT):} The design of an authenticated, radix-based data organization layer capable of emitting cryptographic proofs, provided by Ethereum \cite{wood2014ethereum}.
 	\end{itemize}
 	
+	The entire implementation and code can be found available in the open github repository \cite{jowy-ti_dsproject}.
+	
 	\section{Related Work}
+	
+	The landscape of blockchain research spans heavy-duty production networks, specialized cryptographic storage layers, and simplified educational frameworks. Understanding where this localized prototype fits requires examining these distinct domains.
+	
+	\subsection{Pedagogical and Research Blockchains}
+	To bypass the steep learning curves and noise of complex codebases like Go-Ethereum (Geth), researchers frequently rely on lightweight blockchain frameworks. Minimalist educational implementations, such as \textit{Naivechain} or early Hyperledger prototypes, provide clean environments to study consensus loops but frequently strip away complex world-state tracking, substituting a proper MPT with basic flat arrays or simple cryptographic hash chains. Conversely, fully featured testbeds like Hyperledger Fabric decouple consensus from state via specialized execution channels, but introduce enterprise-grade clustering overhead. This project bridges this gap by retaining a functionally rigorous, hexary MPT layout and a resource-intensive PoW mining loop, while stripping away the unpredictable latency of P2P network layers to allow direct, deterministic profiling of state integrity.
 	
 	\section{Core System Capabilities}
 	The developed platform provides a robust research testbed that successfully demonstrates four primary system capabilities:
@@ -69,7 +76,7 @@
 	\subsection{Architectural Departures from Standard MPT}
 	Unlike generalized global world-state implementations (such as Ethereum), this framework enforces four explicit structural constraints:
 	\begin{enumerate}
-		\item \textbf{GOB Encoding Framework:} The system substitutes standard Recursive Length Prefix (RLP) \cite{wood2014ethereum} serialization for Go's native \texttt{GOB} binary encoder to natively streamline abstract interface polymorphism across node variations.
+		\item \textbf{GOB Encoding Framework:} The system substitutes standard Recursive Length Prefix (RLP) \cite{wood2014ethereum} serialization for Go's native \texttt{GOB} \cite{gob} binary encoder to natively streamline abstract interface polymorphism across node variations.
 		\item \textbf{Value-Free Branch Nodes:} Standard MPT branch nodes store a terminating value slot to accommodate variable-length paths. In this framework, \textbf{Branch nodes do not contain a value} field because every key in the sub-tree shares a strictly uniform static length constraint.
 		\item \textbf{Self-Referential Content Addressing:} The path/key utilized to navigate to a value inside the trie is uniquely derived as the SHA-256 hash of the target value itself:
 		$$\text{Path} = \text{SHA256}(\text{Value})$$
@@ -140,6 +147,8 @@
 	\end{figure*}
 	
 	\FloatBarrier
+	
+	A complete version of the class diagram can be found in the github repository \cite{jowy-ti_dsproject}
 	
 	\subsection{System Architecture}
 	

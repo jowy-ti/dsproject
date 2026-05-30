@@ -14,45 +14,45 @@ Database file #1: references.bib
 Warning--missing institution in nakamoto2008bitcoin
 
 Done.
-You've used 2 entries,
+You've used 4 entries,
             4087 wiz_defined-function locations,
-            835 strings with 7630 characters,
-and the built_in function-call counts, 908 in all, are:
-= -- 75
-> -- 8
+            845 strings with 7810 characters,
+and the built_in function-call counts, 1540 in all, are:
+= -- 121
+> -- 13
 < -- 0
-+ -- 4
-- -- 2
-* -- 54
-:= -- 199
-add.period$ -- 3
-call.type$ -- 2
-change.case$ -- 2
++ -- 7
+- -- 3
+* -- 73
+:= -- 308
+add.period$ -- 7
+call.type$ -- 4
+change.case$ -- 4
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 64
-empty$ -- 61
-format.name$ -- 2
-if$ -- 170
+cite$ -- 5
+duplicate$ -- 122
+empty$ -- 131
+format.name$ -- 3
+if$ -- 312
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 17
-newline$ -- 33
-num.names$ -- 2
-pop$ -- 32
+int.to.str$ -- 4
+missing$ -- 30
+newline$ -- 41
+num.names$ -- 3
+pop$ -- 75
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 65
+skip$ -- 115
 stack$ -- 0
-substring$ -- 3
-swap$ -- 44
+substring$ -- 5
+swap$ -- 72
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 2
+type$ -- 4
 warning$ -- 1
-while$ -- 2
-width$ -- 3
-write$ -- 45
+while$ -- 3
+width$ -- 5
+write$ -- 61
 (There was 1 warning)

@@ -34,4 +34,13 @@ G.~Wood, \emph{Ethereum: A Secure Decentralised Generalised Transaction
   Available: \url{https://ethereum.github.io/yellowpaper/paper.pdf}
 \BIBentrySTDinterwordspacing
 
+\bibitem{jowy-ti_dsproject}
+J.~Ti, ``dsproject,'' \url{https://github.com/jowy-ti/dsproject}, 2026.
+
+\bibitem{gob}
+\BIBentryALTinterwordspacing
+``gob package - encoding/gob - {Go} {Packages}.'' [Online]. Available:
+  \url{https://pkg.go.dev/encoding/gob}
+\BIBentrySTDinterwordspacing
+
 \end{thebibliography}
