@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.29)  30 MAY 2026 15:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.29)  30 MAY 2026 19:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -479,233 +479,241 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 51.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
-9.
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+[]\OT1/ptm/m/n/10 Minimalist ed-u-ca-tional im-ple-men-ta-tions, such as
+ []
 
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
+8.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Underfull \hbox (badness 2799) in paragraph at lines 77--79
+Underfull \hbox (badness 2799) in paragraph at lines 76--78
 []\OT1/ptm/m/n/10 Unlike gen-er-al-ized global world-state im-ple-men-ta-tions
  []
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-
-dist/fonts/enc/dvips/base/8r.enc}
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 7
+8.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texm
+f-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 7
-9.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Underfull \hbox (badness 6708) in paragraph at lines 91--92
+Underfull \hbox (badness 6708) in paragraph at lines 90--91
 []\OT1/ptm/b/n/10 Branch Node: \OT1/ptm/m/n/10 Is an ar-ray of 16 slot hashes
  []
 
 Package svg Info: Last page of `./svg-inkscape/MPT_svg-tex.pdf' is 33 on input 
-line 97.
+line 96.
 (./svg-inkscape/MPT_svg-tex.pdf_tex
-<./svg-inkscape/MPT_svg-tex.pdf, id=18, page=1, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=19, page=1, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page1 used on input l
 ine 56.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=19, page=2, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=20, page=2, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 2>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page2 used on input l
 ine 58.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=20, page=3, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=21, page=3, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 3>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page3 used on input l
 ine 60.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=21, page=4, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=22, page=4, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 4>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page4 used on input l
 ine 62.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=22, page=5, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=23, page=5, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 5>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page5 used on input l
 ine 64.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=23, page=6, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=24, page=6, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 6>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page6 used on input l
 ine 66.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=24, page=7, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=25, page=7, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 7>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page7 used on input l
 ine 68.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=25, page=8, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=26, page=8, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 8>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page8 used on input l
 ine 70.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=26, page=9, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=27, page=9, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 9>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page9 used on input l
 ine 72.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=27, page=10, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=28, page=10, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 10>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page10 used on input 
 line 74.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=28, page=11, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=29, page=11, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 11>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page11 used on input 
 line 76.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=29, page=12, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=30, page=12, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 12>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page12 used on input 
 line 78.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=30, page=13, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=31, page=13, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 13>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page13 used on input 
 line 80.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=31, page=14, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=32, page=14, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 14>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page14 used on input 
 line 82.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=32, page=15, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=33, page=15, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 15>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page15 used on input 
 line 84.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=33, page=16, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=34, page=16, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 16>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page16 used on input 
 line 86.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=34, page=17, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=35, page=17, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 17>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page17 used on input 
 line 88.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=35, page=18, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=36, page=18, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 18>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page18 used on input 
 line 90.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=36, page=19, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=37, page=19, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 19>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page19 used on input 
 line 92.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=37, page=20, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=38, page=20, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 20>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page20 used on input 
 line 94.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=38, page=21, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=39, page=21, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 21>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page21 used on input 
 line 96.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=39, page=22, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=40, page=22, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 22>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page22 used on input 
 line 98.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=40, page=23, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=41, page=23, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 23>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page23 used on input 
 line 100.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=41, page=24, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=42, page=24, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 24>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page24 used on input 
 line 102.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=42, page=25, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=43, page=25, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 25>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page25 used on input 
 line 104.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=43, page=26, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=44, page=26, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 26>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page26 used on input 
 line 106.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=44, page=27, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=45, page=27, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 27>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page27 used on input 
 line 108.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=45, page=28, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=46, page=28, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 28>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page28 used on input 
 line 110.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=46, page=29, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=47, page=29, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 29>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page29 used on input 
 line 112.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=47, page=30, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=48, page=30, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 30>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page30 used on input 
 line 114.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=48, page=31, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=49, page=31, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 31>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page31 used on input 
 line 116.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=49, page=32, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=50, page=32, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 32>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page32 used on input 
 line 118.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-<./svg-inkscape/MPT_svg-tex.pdf, id=50, page=33, 338.01282pt x 301.8778pt>
+<./svg-inkscape/MPT_svg-tex.pdf, id=51, page=33, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 33>
 Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page33 used on input 
 line 120.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
-) [2 <./svg-inkscape/MPT_svg-tex.pdf> <./svg-inkscape/MPT_svg-tex.pdf
+)
+<./images/simplest_diagram.png, id=52, 1896.08376pt x 911.405pt>
+File: ./images/simplest_diagram.png Graphic file (type png)
+<use ./images/simplest_diagram.png>
+Package pdftex.def Info: ./images/simplest_diagram.png  used on input line 132.
+
+(pdftex.def)             Requested size: 516.0pt x 248.0296pt.
+ [2 <./svg-inkscape/MPT_svg-tex.pdf> <./svg-inkscape/MPT_svg-tex.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./svg-inkscape/MPT_svg-tex.pdf): PDF in
 clusion: multiple pdfs with page group included in a single page
@@ -834,35 +842,27 @@ clusion: multiple pdfs with page group included in a single page
 pdfTeX warning: /usr/bin/pdflatex (file ./svg-inkscape/MPT_svg-tex.pdf): PDF in
 clusion: multiple pdfs with page group included in a single page
 >]
-Underfull \hbox (badness 3557) in paragraph at lines 136--137
+Underfull \hbox (badness 3557) in paragraph at lines 144--145
 []\OT1/ptm/b/n/10 BlockchainIterator. \OT1/ptm/m/n/10 Man-ages a strong com-po-
 si-tion
  []
 
 
-Underfull \hbox (badness 5652) in paragraph at lines 136--137
+Underfull \hbox (badness 5652) in paragraph at lines 144--145
 \OT1/ptm/m/n/10 re-la-tion-ship back to the database, track-ing byte-
  []
 
-<./images/simplest_diagram.png, id=57, 1896.08376pt x 911.405pt>
-File: ./images/simplest_diagram.png Graphic file (type png)
-<use ./images/simplest_diagram.png>
-Package pdftex.def Info: ./images/simplest_diagram.png  used on input line 144.
-
-(pdftex.def)             Requested size: 516.0pt x 248.0296pt.
-[3]
 Package svg Info: Last page of `./svg-inkscape/architecture_svg-tex.pdf' is 1 o
-n input line 174.
- (./svg-inkscape/architecture_svg-tex.pdf_tex
-<./svg-inkscape/architecture_svg-tex.pdf, id=63, page=1, 362.47922pt x 261.9787
+n input line 173.
+(./svg-inkscape/architecture_svg-tex.pdf_tex
+<./svg-inkscape/architecture_svg-tex.pdf, id=60, page=1, 362.47922pt x 261.9787
 4pt>
 File: ./svg-inkscape/architecture_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/architecture_svg-tex.pdf, page 1>
 Package pdftex.def Info: ./svg-inkscape/architecture_svg-tex.pdf , page1 used o
 n input line 56.
 (pdftex.def)             Requested size: 252.0pt x 182.13266pt.
-) [4 <./images/simplest_diagram.png> <./svg-inkscape/architecture_svg-tex.pdf>]
- (./paper2.bbl)
+) [3 <./images/simplest_diagram.png>] (./paper2.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -874,22 +874,20 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[5
-
-] (./paper2.aux)
+[4 <./svg-inkscape/architecture_svg-tex.pdf>] (./paper2.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 8291 strings out of 474222
- 148546 string characters out of 5748733
- 1953975 words of memory out of 5000000
- 30366 multiletter control sequences out of 15000+600000
+ 8292 strings out of 474222
+ 148556 string characters out of 5748733
+ 1952975 words of memory out of 5000000
+ 30367 multiletter control sequences out of 15000+600000
  595307 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,14n,93p,921b,479s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,14n,93p,917b,479s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texli
@@ -898,10 +896,10 @@ f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
 /utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper2.pdf (5 pages, 260402 bytes).
+Output written on paper2.pdf (4 pages, 260695 bytes).
 PDF statistics:
- 172 PDF objects out of 1000 (max. 8388607)
- 81 compressed objects within 1 object stream
+ 170 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  198 words of extra memory for PDF output out of 10000 (max. 10000000)
 
