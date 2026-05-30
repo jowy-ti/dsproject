@@ -2,6 +2,7 @@
 
 ## Class Diagram
 
+```mermaid
 classDiagram
     class Node {
         <<interface>>
@@ -113,3 +114,4 @@ classDiagram
 
     Block ..> boltStorage : Validates State
     ProofOfWork ..> Block : Mines
+```
