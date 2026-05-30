@@ -119,14 +119,17 @@
 	Once a nonce is discovered that positions the integer representation of the block hash below the calculated target line $T$, the mining cycle terminates, and the block is broadcast to the storage management layer.
 	
 	\section{Architectural Design}
-	The architectural design strictly prioritizes modularity, enforcing a highly structured, acyclic dependency graph among the application classes to clearly delineate operational responsibilities.
+	The architectural design strictly prioritizes modularity, enforcing a highly structured, acyclic dependency graph among the application classes to clearly delineate operational responsibilities, Figure \ref{fig:class_diagram} and \ref{fig:architecture}.
 	
 	\subsection{Class Diagram}
 	
 	\begin{itemize}
-		\item \textbf{The Blockchain Class:} Acts as the primary entry point, maintaining a direct strong composition relationship over the active \texttt{Trie} model and overseeing database transactions.
-		\item \textbf{The Storage Management Layer:} Utilizes an instance of \texttt{boltStorage} to write data into two buckets (\texttt{"blocks"} and \texttt{"tries"}).
-		\item \textbf{The Iteration Layer:} The \texttt{BlockchainIterator} manages a weak aggregation relationship back to the database, tracking byte-serialized headers backwards via the block's embedded \texttt{PrevBlockHash} hash pointer.
+		\item \textbf{Blockchain.} Acts as the primary entry point, maintaining a direct strong composition relationship over the active \texttt{Trie} model and overseeing database transactions.
+		\item \textbf{boltStorage.} Utilizes an instance of \texttt{boltStorage} to write data into two buckets (\texttt{"blocks"} and \texttt{"tries"}).
+		\item \textbf{BlockchainIterator.} Manages a strong composition relationship back to the database, tracking byte-serialized headers backwards via the block's embedded \texttt{PrevBlockHash} hash pointer.
+		\item \textbf{Proof of Work.} Responsible of performing the block mining process, trying to achieve a hash lower than a specific target produced by a certain difficulty.
+		\item \textbf{Block.} It contains the unique information for identification purpose and also the hash of previous block to grant immutability and making possible iterate over the chain.
+		\item \textbf{Trie.} Data structure used to store pair key-values, in this case strings transformed to bytes. The trie only contains the root node, and you can visit all nodes that belong to the trie recursively starting with the this first node. A "Node" is a Go interface that could be either a "Leaf", "Branch" or "Extension" classes which functionalities have been explained previously.
 	\end{itemize}
 	
 	\begin{figure*}[t]
@@ -139,6 +142,23 @@
 	\FloatBarrier
 	
 	\subsection{System Architecture}
+	
+	The architecture has three main layers which can be well differentiated in the Figure \ref{fig:architecture}. Responsibilities of each layer are the following:
+	
+	\begin{enumerate}	
+		\item \textbf{Client Interface.} Is the only part of the program that directly interacts with the user and calls the appropriate functions of the Blockchain core logic layer to perform the actions. This layer is a CLI and has some features like auto-complete and commands usage help.
+		
+		\item \textbf{Blockchain core logic and consensus layer.} Provides the core logic to perform any action the blockchain and it performs four main actions:
+		
+		\begin{itemize}
+			\item \textbf{Chain validation.} Performed every time a block wants to be added to assure that the chain is valid and not a fraud.
+			\item \textbf{Trie creation.} Process of adding elements to a trie till is decided it is completed.
+			\item \textbf{Block assembly.} Once the trie is built a block is initialized with its respective data and the first value of the nonce "0".
+			\item \textbf{Block mining.} Finally, this step performs Proof of Work (PoW), iterating nonce values till it produces a hash value lower than a target. Once the a block has been mined successfully, it is sent to the next layer to be stored.
+		\end{itemize}
+		
+		\item \textbf{Persistent storage DB.} Its purpose is to manage the interaction with database (BoltDB) retrieving or storing the information. The database is divided into two buckets for the different kind of data that this program handles (trie and block data).	
+	\end{enumerate}	
 	
 	\begin{figure}[htbp]
 		\centering

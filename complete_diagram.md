@@ -100,9 +100,10 @@ classDiagram
     Extension o-- Node
 
     Blockchain o-- Trie
-    Blockchain *-- boltStorage
-    BlockchainIterator *-- boltStorage
+    Blockchain o-- boltStorage
+    BlockchainIterator o-- boltStorage
     Blockchain ..> BlockchainIterator : Creates
+    Blockchain ..> ProofOfWork : Creates
     Blockchain ..> Block : Manages
     BlockchainIterator ..> Block : Decodes
 
