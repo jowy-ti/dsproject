@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.10.13)  29 MAY 2026 19:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.29)  30 MAY 2026 19:10
 entering extended mode
- \write18 enabled.
+ restricted \write18 enabled.
  %&-line parsing enabled.
 **paper2.tex
 (./paper2.tex
@@ -328,30 +328,13 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/shellesc.sty
 Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
-Package shellesc Info: Unrestricted shell escape enabled on input line 75.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/ifplatform/ifplatform.sty
-Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
-
-(/usr/share/texlive/texmf-dist/tex/generic/catchfile/catchfile.sty
-Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
-Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifluatex.sty
-Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
-)
-runsystem(uname -s > "paper2.w18")...executed.
-
- (./paper2.w18)
-runsystem(rm -- "paper2.w18")...executed.
-
+Package shellesc Info: Restricted shell escape enabled on input line 77.
 )
 \c@svg@param@lastpage=\count292
 \svg@box=\box57
 \c@svg@param@currpage=\count293
-) (/usr/share/texlive/texmf-dist/tex/latex/transparent/transparent.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/transparent/transparent.sty
 Package: transparent 2022-10-27 v1.5 Transparency with color stacks
 
 (/usr/share/texlive/texmf-dist/tex/latex/transparent/transparent-nometadata.sty
@@ -496,33 +479,35 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 51.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
-2.
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+[]\OT1/ptm/m/n/10 Minimalist ed-u-ca-tional im-ple-men-ta-tions, such as
+ []
 
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
+8.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Underfull \hbox (badness 2799) in paragraph at lines 70--72
+Underfull \hbox (badness 2799) in paragraph at lines 76--78
 []\OT1/ptm/m/n/10 Unlike gen-er-al-ized global world-state im-ple-men-ta-tions
  []
 
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 7
-2.
+8.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Underfull \hbox (badness 6708) in paragraph at lines 84--85
-[]\OT1/ptm/b/n/10 Branch Node: \OT1/ptm/m/n/10 Is an ar-ray of 16 slot hashes
- []
-
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-
-dist/fonts/enc/dvips/base/8r.enc}
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texm
+f-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
+Underfull \hbox (badness 6708) in paragraph at lines 90--91
+[]\OT1/ptm/b/n/10 Branch Node: \OT1/ptm/m/n/10 Is an ar-ray of 16 slot hashes
+ []
+
 Package svg Info: Last page of `./svg-inkscape/MPT_svg-tex.pdf' is 33 on input 
-line 90.
- (./svg-inkscape/MPT_svg-tex.pdf_tex
+line 96.
+(./svg-inkscape/MPT_svg-tex.pdf_tex
 <./svg-inkscape/MPT_svg-tex.pdf, id=19, page=1, 338.01282pt x 301.8778pt>
 File: ./svg-inkscape/MPT_svg-tex.pdf Graphic file (type pdf)
 <use ./svg-inkscape/MPT_svg-tex.pdf, page 1>
@@ -722,18 +707,13 @@ Package pdftex.def Info: ./svg-inkscape/MPT_svg-tex.pdf , page33 used on input
 line 120.
 (pdftex.def)             Requested size: 252.0pt x 225.06737pt.
 )
-Underfull \hbox (badness 1521) in paragraph at lines 128--129
-[]\OT1/ptm/b/n/10 The Stor-age Man-age-ment Layer: \OT1/ptm/m/n/10 Uti-lizes an
- in-
- []
-
 <./images/simplest_diagram.png, id=52, 1896.08376pt x 911.405pt>
 File: ./images/simplest_diagram.png Graphic file (type png)
 <use ./images/simplest_diagram.png>
-Package pdftex.def Info: ./images/simplest_diagram.png  used on input line 134.
+Package pdftex.def Info: ./images/simplest_diagram.png  used on input line 132.
 
 (pdftex.def)             Requested size: 516.0pt x 248.0296pt.
-[2 <./svg-inkscape/MPT_svg-tex.pdf> <./svg-inkscape/MPT_svg-tex.pdf
+ [2 <./svg-inkscape/MPT_svg-tex.pdf> <./svg-inkscape/MPT_svg-tex.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./svg-inkscape/MPT_svg-tex.pdf): PDF in
 clusion: multiple pdfs with page group included in a single page
@@ -862,9 +842,19 @@ clusion: multiple pdfs with page group included in a single page
 pdfTeX warning: /usr/bin/pdflatex (file ./svg-inkscape/MPT_svg-tex.pdf): PDF in
 clusion: multiple pdfs with page group included in a single page
 >]
+Underfull \hbox (badness 3557) in paragraph at lines 144--145
+[]\OT1/ptm/b/n/10 BlockchainIterator. \OT1/ptm/m/n/10 Man-ages a strong com-po-
+si-tion
+ []
+
+
+Underfull \hbox (badness 5652) in paragraph at lines 144--145
+\OT1/ptm/m/n/10 re-la-tion-ship back to the database, track-ing byte-
+ []
+
 Package svg Info: Last page of `./svg-inkscape/architecture_svg-tex.pdf' is 1 o
-n input line 145.
- (./svg-inkscape/architecture_svg-tex.pdf_tex
+n input line 173.
+(./svg-inkscape/architecture_svg-tex.pdf_tex
 <./svg-inkscape/architecture_svg-tex.pdf, id=60, page=1, 362.47922pt x 261.9787
 4pt>
 File: ./svg-inkscape/architecture_svg-tex.pdf Graphic file (type pdf)
@@ -872,7 +862,7 @@ File: ./svg-inkscape/architecture_svg-tex.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./svg-inkscape/architecture_svg-tex.pdf , page1 used o
 n input line 56.
 (pdftex.def)             Requested size: 252.0pt x 182.13266pt.
-) (./paper2.bbl)
+) [3 <./images/simplest_diagram.png>] (./paper2.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -884,21 +874,20 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[3 <./images/simplest_diagram.png> <./svg-inkscape/architecture_svg-tex.pdf>]
-(./paper2.aux)
+[4 <./svg-inkscape/architecture_svg-tex.pdf>] (./paper2.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 8418 strings out of 474222
- 151336 string characters out of 5748732
+ 8292 strings out of 474222
+ 148556 string characters out of 5748733
  1952975 words of memory out of 5000000
- 30476 multiletter control sequences out of 15000+600000
+ 30367 multiletter control sequences out of 15000+600000
  595307 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,14n,93p,823b,481s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,14n,93p,917b,479s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texli
@@ -907,10 +896,10 @@ f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
 /utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper2.pdf (3 pages, 256632 bytes).
+Output written on paper2.pdf (4 pages, 260695 bytes).
 PDF statistics:
- 166 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 170 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  198 words of extra memory for PDF output out of 10000 (max. 10000000)
 
